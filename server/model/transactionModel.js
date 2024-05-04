@@ -22,7 +22,7 @@ const transactionSchema = new Schema(
     },
     transaction_type: {
       type: String,
-      required: true,
+
       enum: ["dr", "cr"],
     },
     debit: {
@@ -39,10 +39,13 @@ const transactionSchema = new Schema(
     timestamps: true,
   }
 );
-transactionSchema.pre("save", function () {
+transactionSchema.pre("save", function (next) {
   if (["Asset", "Expense", "Dividen"].includes(this.ac_name)) {
     this.transaction_type = "dr";
   } else {
     this.transaction_type = "cr";
   }
+  next();
 });
+
+module.exports = mongoose.model("Transcation", transactionSchema);

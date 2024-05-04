@@ -70,6 +70,7 @@ app.use(
 
 // app environment end######
 app.get("/", (req, res) => {
+
   res.render("index", { title: "Account Management" });
 });
 app.use(route);
