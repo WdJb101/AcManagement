@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+const mongoosePaginate = require("mongoose-paginate-v2");
 const transactionSchema = new Schema(
   {
     ac_name: {
@@ -47,5 +47,5 @@ transactionSchema.pre("save", function (next) {
   }
   next();
 });
-
+transactionSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Transcation", transactionSchema);

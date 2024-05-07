@@ -75,8 +75,8 @@ const newTransaction = tryCatch(async (req, res, next) => {
 
 //monthly Transcation
 const monthlyTranscation = tryCatch(async (req, res, next) => {
-  const { ac_name, this_month } = req.query;
-  console.log(this_month);
+  const { ac_name, this_month, page, limit, fileds, sort } = req.query;
+  console.log(req.query);
   // Get the current year and month
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
@@ -88,13 +88,13 @@ const monthlyTranscation = tryCatch(async (req, res, next) => {
   // Get the first and last day of the specified month
   const firstDayOfMonth = new Date(currentYear, monthToQuery - 1, 1);
   const lastDayOfMonth = new Date(currentYear, monthToQuery, 0);
-  console.log({ firstDayOfMonth, lastDayOfMonth });
+
   //find transcation
   const transactions = await Transaction.find({
     ac_name,
     createdAt: { $gte: firstDayOfMonth, $lte: lastDayOfMonth },
   });
-  console.log(transactions);
+
   // Group transactions by month
   const monthlyTransactions = {};
   let krd = 0;
@@ -119,5 +119,47 @@ const monthlyTranscation = tryCatch(async (req, res, next) => {
 
   appStatus(200, "doen", { transactions, monthlyTransactions }, res);
 });
+//delete multiple
 
-module.exports = { newTransaction, monthlyTranscation };
+const delTransaction = tryCatch(async (req, res, next) => {
+  const ids = req.body.ids;
+
+  try {
+    for (const id of ids) {
+      const mxTa = await Transaction.findByIdAndDelete(id);
+      if (!mxTa) {
+        throw new Error(`Transaction with ID ${id} not found`);
+      }
+
+      // Update account balances based on transaction type
+      if (mxTa.transaction_type === "dr") {
+        const balanceChange = mxTa.debit > 0 ? -mxTa.debit : mxTa.credit;
+        await updateAccountBalance(mxTa.ac_id, id, balanceChange);
+      } else if (mxTa.transaction_type === "cr") {
+        const balanceChange = mxTa.credit > 0 ? -mxTa.credit : mxTa.debit;
+        await updateAccountBalance(mxTa.ac_id, id, balanceChange);
+      }
+    }
+
+    // Send success response if all transactions were deleted and account balances updated successfully
+    appStatus(200, "Transactions deleted successfully", null, res);
+  } catch (error) {
+    console.error("Error deleting transactions:", error);
+    return next(appError(500, "Internal Server Error"));
+  }
+});
+//edit Transcation ****
+
+//########### function **************
+async function updateAccountBalance(accountId, transactionId, balanceChange) {
+  await Account.findByIdAndUpdate(
+    accountId,
+    {
+      $pull: { transaction_ref_list: transactionId },
+      $inc: { balance: balanceChange },
+    },
+    { new: true }
+  );
+}
+
+module.exports = { newTransaction, monthlyTranscation, delTransaction };
