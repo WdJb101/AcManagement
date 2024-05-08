@@ -3,7 +3,7 @@ const Account = require("../../model/accountModel");
 const tryCatch = require("../../utils/tryCatch");
 const appError = require("http-errors");
 const appStatus = require("../../utils/appStatus");
-
+const { parseISO, addDays } = require("date-fns");
 //new trans
 const newTransaction = tryCatch(async (req, res, next) => {
   const { ac_name, ac_id, transaction_name, transaction_by, debit, credit } =
@@ -75,39 +75,86 @@ const newTransaction = tryCatch(async (req, res, next) => {
 
 //monthly Transcation
 const monthlyTranscation = tryCatch(async (req, res, next) => {
-  const { ac_name, this_month, page, limit, fileds, sort } = req.query;
-  console.log(req.query);
+  const {
+    ac_name,
+    transaction_type,
+    this_month,
+    page,
+    limit,
+    fields,
+    transaction_name,
+    transaction_by,
+  } = req.query;
+
+  const math = fields.split(",").join(" ").toString();
+
   // Get the current year and month
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth() + 1;
 
   // If 'this_month' is not provided, default to the current month
-  const monthToQuery = this_month ? parseInt(this_month) : currentMonth;
+  const monthToQuery =
+    parseISO(this_month).getMonth() + 1
+      ? parseISO(this_month).getMonth() + 1
+      : currentMonth;
 
   // Get the first and last day of the specified month
   const firstDayOfMonth = new Date(currentYear, monthToQuery - 1, 1);
   const lastDayOfMonth = new Date(currentYear, monthToQuery, 0);
+  //?###### query filter ####
+  let query = { createdAt: { $gte: firstDayOfMonth, $lte: lastDayOfMonth } };
+  if (ac_name) {
+    query.ac_name = ac_name;
+  }
+  if (transaction_type) {
+    query.transaction_type = transaction_type;
+  }
+  if (transaction_name) {
+    query.transaction_name = transaction_name;
+  }
+  if (transaction_by) {
+    query.transaction_by = transaction_by;
+  }
+  //?###### sort filter ####
 
-  //find transcation
-  const transactions = await Transaction.find({
-    ac_name,
-    createdAt: { $gte: firstDayOfMonth, $lte: lastDayOfMonth },
-  });
+  let sort = {};
+  if (transaction_name) {
+    sort.transaction_name = transaction_name;
+  }
+  if (transaction_by) {
+    sort.transaction_by = transaction_by;
+  }
+  //?###### option ####
+  let options = {
+    select: math,
+    lean: true,
 
-  // Group transactions by month
+    limit: limit,
+    page: page,
+  };
+
+  const transactions = await Transaction.paginate(query, options);
+
   const monthlyTransactions = {};
   let krd = 0;
   let dbit = 0;
-  transactions.forEach((transaction) => {
+  transactions.docs.forEach((transaction) => {
     const monthYear = `${
       transaction.createdAt.getMonth() + 1
     }-${transaction.createdAt.getFullYear()}`;
     krd += transaction.credit;
     dbit += transaction.debit;
     monthlyTransactions.monthYear = monthYear;
-    monthlyTransactions.ac_name = ac_name;
-    monthlyTransactions.ac_type = transactions[0].transaction_type;
+    if (ac_name) {
+      monthlyTransactions.ac_name = ac_name;
+    }
+    if (transaction_type) {
+      monthlyTransactions.ac_type = transaction_type;
+    } else {
+      monthlyTransactions.ac_type = transactions.docs[0].transaction_type;
+    }
+
     if (!monthYear) {
       monthlyTransactions.credit = 0;
       monthlyTransactions.debit = 0;
@@ -117,7 +164,7 @@ const monthlyTranscation = tryCatch(async (req, res, next) => {
     }
   });
 
-  appStatus(200, "doen", { transactions, monthlyTransactions }, res);
+  appStatus(200, "done", { transactions, monthlyTransactions }, res);
 });
 //delete multiple
 

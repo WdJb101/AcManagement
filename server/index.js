@@ -65,6 +65,7 @@ app.use(
     origin: allowedOrigins,
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: false,
+    allowedHeaders:""
   })
 );
 
