@@ -1,3 +1,75 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.login_animation {
+  animation: login-animation 3s infinite ease-in-out forwards;
+}
+
+@keyframes login-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.login_animation2 {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  /* transform: rotate(-50deg); */
+  animation: login-animation2 3s ease-in-out forwards;
+}
+
+@keyframes login-animation2 {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(-50deg);
+  }
+}
+
+.login_animation3 {
+  animation: login-animation3 2s ease-in-out backwards;
+}
+
+@keyframes login-animation3 {
+  0% {
+    transform: translateY(-45%);
+  }
+  100% {
+    transform: translateY(-0%);
+  }
+}
+
+.form_animation {
+  animation: form_animation 2s ease-in-out;
+  transition: 4s;
+}
+
+@keyframes form_animation {
+  0% {
+    transform: translateY(-40%);
+  }
+  50% {
+    transform: translateY(10%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+.text_animation {
+  animation: text_animation 2s ease-in-out;
+}
+
+@keyframes text_animation {
+  0% {
+    transform: translateY(-20%);
+  }
+  50% {
+    transform: translateY(14%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import { RouterProvider } from "react-router-dom";
-import router from "./shared/AdminRoutes/AdminRoutes";
+import router from "./shared/Routers/AdminRoutes/AdminRoutes";
 
 const App = () => {
   return (
