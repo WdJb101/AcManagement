@@ -58,3 +58,18 @@
     transform: translateY(0%);
   }
 }
+.text_animation {
+  animation: text_animation 2s ease-in-out;
+}
+
+@keyframes text_animation {
+  0% {
+    transform: translateY(-20%);
+  }
+  50% {
+    transform: translateY(14%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}

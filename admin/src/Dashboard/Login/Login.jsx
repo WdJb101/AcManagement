@@ -10,9 +10,9 @@ const Login = () => {
   let [password, setPassword] = useState(true);
   let [email, setEmail] = useState(true);
 
-  // let handleEye = () => {
-  //   setPassword(!password);
-  // };
+  let handleEyepassword = () => {
+    setPassword(!password);
+  };
   let handleEyeEmail = () => {
     setEmail(!email);
   };
@@ -25,23 +25,23 @@ const Login = () => {
       {/*##############--------- form starts------############### */}
       <div className="md:py-[200px] py-5 form_animation">
         <div className=" md:py-[100px] md:px-[76px] p-5 bg-[#fafafa] min-w-[200px] md:w-[555px] mx-auto rounded-xl">
-          <div className="">
+          <div className=" text_animation">
             <h2 className="text-4xl text-primary font-bold  text-center pb-10">
               WeeCash
             </h2>
             <div>
-              <div className="flex items-center gap-1 ">
+              <div className="flex items-center gap-1 text_animation">
                 <p className="text-sm text-ash font-normal ">Welcome back!</p>
                 <span className="text-[#ffcf4a] text-base">
                   <PiHandWavingFill />
                 </span>
               </div>
-              <h2 className="text-[22px] text-black font-bold pb-[34px]">
+              <h2 className="text-[22px] text-black font-bold pb-[34px] text_animation">
                 Login to your account
               </h2>
 
               <div className="md:w-[350px] w-full px-2">
-                <div className="pb-5">
+                <div className="pb-5 text_animation">
                   <label className="text-xs text-black font-semibold capitalize">
                     User Credential 1
                   </label>
@@ -51,49 +51,61 @@ const Login = () => {
                       className="w-full rounded-[4px] border-[#D8D8D8] border p-3 placeholder:text-xs placeholder:text-[#757575] placeholder:font-normal outline-[#757575]"
                       placeholder="Please enter your email"
                     />
-                    <span>
-                      <TypeIcon type="eyeopen" />
-                    </span>
 
                     {email ? (
                       <span
-                        // className="text-[#757575] text-xl absolute top-[50%] right-4 -translate-y-[50%]"
+                        className="text-[#757575] text-xl absolute top-[50%] right-4 -translate-y-[50%]"
                         onClick={() => handleEyeEmail()}
                       >
-                        <TypeIcon type="eyeopen" />
+                        <TypeIcon type="eyClose" />
                         {/* <IoIosEye /> */}
                       </span>
                     ) : (
                       <span
-                        // className="text-[#757575] text-xl absolute top-[50%] right-4 -translate-y-[50%]"
+                        className="text-[#757575] text-xl absolute top-[50%] right-4 -translate-y-[50%]"
                         onClick={() => handleEyeEmail()}
                       >
-                        <TypeIcon type="eyClose" />
+                        <TypeIcon type="eyeopen" />
                       </span>
                     )}
                   </div>
                 </div>
-                <div className=" pb-5">
+                <div className=" pb-5 text_animation">
                   <label className="text-xs text-black font-semibold capitalize">
                     User Credential 2
                   </label>
-                  <div className=" pt-1">
+                  <div className="relative pt-1">
                     <input
-                      type="password"
+                      type={!password ? "text" : "password"}
                       className="w-full rounded-[4px] border-[#D8D8D8] border p-3 placeholder:text-xs placeholder:text-[#757575] placeholder:font-normal outline-[#757575]"
                       placeholder="Please enter password"
                     />
-                    <TypeIcon type="eyClose" />
+                    {password ? (
+                      <span
+                        className="text-[#757575] text-xl absolute top-[50%] right-4 -translate-y-[50%]"
+                        onClick={() => handleEyepassword()}
+                      >
+                        <TypeIcon type="eyClose" />
+                        {/* <IoIosEye /> */}
+                      </span>
+                    ) : (
+                      <span
+                        className="text-[#757575] text-xl absolute top-[50%] right-4 -translate-y-[50%]"
+                        onClick={() => handleEyepassword()}
+                      >
+                        <TypeIcon type="eyeopen" />
+                      </span>
+                    )}
                   </div>
                 </div>
-                <div className="bg-primary text-center rounded-[4px] ">
+                <div className="bg-primary hover:bg-black text-center rounded-[4px]  text_animation">
                   <button className="text-white text-base font-bold py-[14px] ">
                     login
                   </button>
                 </div>
                 <div className="pt-5">
-                  <Link>
-                    <span className="text-xs text-[#00B8FF] font-normal border-b border-[#00B8FF] ">
+                  <Link to="popup">
+                    <span className="text-xs text-[#00B8FF] hover:text-[#0a96cd] font-normal border-b border-[#00B8FF] ">
                       Forget Password?
                     </span>
                   </Link>
