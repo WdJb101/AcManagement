@@ -1,16 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import loginBg from "../Login/assets/backgroundDot.png";
+import loginsubstract from "../Login/assets/Subtracts.png";
 import { PiHandWavingFill } from "react-icons/pi";
 import TypeIcon from "../../shared/Icon/TypeIcon";
 import { Link } from "react-router-dom";
+import { IoIosEye } from "react-icons/io";
+
 const Login = () => {
+  let [password, setPassword] = useState(true);
+  let [email, setEmail] = useState(true);
+
+  // let handleEye = () => {
+  //   setPassword(!password);
+  // };
+  let handleEyeEmail = () => {
+    setEmail(!email);
+  };
+
   return (
     <div
-      className="w-full h-lvh bg-cover bg-no-repeat bg-center"
+      className="w-full h-lvh bg-cover bg-no-repeat bg-center relative overflow-x-hidden"
       style={{ backgroundImage: `url(${loginBg})` }}
     >
-      <div className="py-[214px]">
-        <div className=" py-[100px] px-[76px] bg-[#fafafa] w-[555px] mx-auto rounded-xl">
+      {/*##############--------- form starts------############### */}
+      <div className="md:py-[200px] py-5 form_animation">
+        <div className=" md:py-[100px] md:px-[76px] p-5 bg-[#fafafa] min-w-[200px] md:w-[555px] mx-auto rounded-xl">
           <div className="">
             <h2 className="text-4xl text-primary font-bold  text-center pb-10">
               WeeCash
@@ -26,28 +40,48 @@ const Login = () => {
                 Login to your account
               </h2>
 
-              <div>
+              <div className="md:w-[350px] w-full px-2">
                 <div className="pb-5">
                   <label className="text-xs text-black font-semibold capitalize">
-                    email
+                    User Credential 1
                   </label>
-                  <div className="w-[350px] pt-1">
+                  <div className="relative pt-1">
                     <input
-                      type="email"
+                      type={!email ? "email" : "password"}
                       className="w-full rounded-[4px] border-[#D8D8D8] border p-3 placeholder:text-xs placeholder:text-[#757575] placeholder:font-normal outline-[#757575]"
                       placeholder="Please enter your email"
                     />
+                    <span>
+                      <TypeIcon type="eyeopen" />
+                    </span>
+
+                    {email ? (
+                      <span
+                        // className="text-[#757575] text-xl absolute top-[50%] right-4 -translate-y-[50%]"
+                        onClick={() => handleEyeEmail()}
+                      >
+                        <TypeIcon type="eyeopen" />
+                        {/* <IoIosEye /> */}
+                      </span>
+                    ) : (
+                      <span
+                        // className="text-[#757575] text-xl absolute top-[50%] right-4 -translate-y-[50%]"
+                        onClick={() => handleEyeEmail()}
+                      >
+                        <TypeIcon type="eyClose" />
+                      </span>
+                    )}
                   </div>
                 </div>
-                <div className="pb-5">
+                <div className=" pb-5">
                   <label className="text-xs text-black font-semibold capitalize">
-                    password
+                    User Credential 2
                   </label>
-                  <div className="w-[350px] pt-1">
+                  <div className=" pt-1">
                     <input
                       type="password"
                       className="w-full rounded-[4px] border-[#D8D8D8] border p-3 placeholder:text-xs placeholder:text-[#757575] placeholder:font-normal outline-[#757575]"
-                      placeholder="Please enter your email"
+                      placeholder="Please enter password"
                     />
                     <TypeIcon type="eyClose" />
                   </div>
@@ -69,6 +103,26 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {/*##############--------- form ends------############### */}
+
+      {/*##############--------- animation  left-[-6%]ends------############### */}
+      <div className="w-[709px] h-[709px] bg-[#0063E6] rounded-full absolute left-[-25%] top-[20%] -translate-x-2/4 -translate-y-2/4 login_animation lg:block hidden">
+        <div className="size-14 bg-[#2196F3] rounded-full absolute top-2/4  left-0 -translate-x-2/4 -translate-y-2/4"></div>
+      </div>
+
+      <div className="size-[200px] bg-[rgba(0,140,255,0.7)] absolute right-[8%] bottom-[-7%] -translate- -translate-y-0  login_animation2 lg:block hidden"></div>
+
+      <div className="size-[200px] bg-[rgba(0,140,255,0.7)] absolute right-[4%] bottom-[-13%] login_animation2 lg:block hidden"></div>
+
+      <div className="size-[200px] bg-[rgba(0,140,255,0.7)] absolute right-[-0%] bottom-[-20%] -translate- -translate-y-0  login_animation2 lg:block hidden"></div>
+
+      <div className="absolute top-[-45%] right-[-30%] login_animation3 lg:block hidden">
+        <picture>
+          <img src={loginsubstract} alt="login animation" />
+        </picture>
+      </div>
+
+      {/*##############--------- animation ends------############### */}
     </div>
   );
 };
