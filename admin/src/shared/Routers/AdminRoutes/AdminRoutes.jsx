@@ -11,7 +11,7 @@ import AdminiVoucher from "../../../feature/AdminVoucher/AdminiVoucher";
 import AdminHelpCenter from "../../../feature/AdminHelpCenter/AdminHelpCenter";
 const router = createBrowserRouter([
   {
-    path: "/admin",
+    path: "/",
     element: <AdminLayout />,
     children: [
       {
