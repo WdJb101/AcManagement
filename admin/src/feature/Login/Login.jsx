@@ -4,7 +4,6 @@ import loginsubstract from "../Login/assets/Subtracts.png";
 import { PiHandWavingFill } from "react-icons/pi";
 import TypeIcon from "../../shared/Icon/TypeIcon";
 import { Link } from "react-router-dom";
-import { IoIosEye } from "react-icons/io";
 
 const Login = () => {
   let [password, setPassword] = useState(true);
@@ -19,11 +18,11 @@ const Login = () => {
 
   return (
     <div
-      className="w-full h-lvh bg-cover bg-no-repeat bg-center relative overflow-x-hidden"
+      className="w-full h-lvh bg-cover bg-no-repeat bg-center relative overflow-hidden"
       style={{ backgroundImage: `url(${loginBg})` }}
     >
       {/*##############--------- form starts------############### */}
-      <div className="md:py-[200px] py-5 form_animation">
+      <div className="py-[100px] form_animation">
         <div className=" md:py-[100px] md:px-[76px] p-5 bg-[#fafafa] min-w-[200px] md:w-[555px] mx-auto rounded-xl">
           <div className=" text_animation">
             <h2 className="text-4xl text-primary font-bold  text-center pb-10">
@@ -122,11 +121,11 @@ const Login = () => {
         <div className="size-14 bg-[#2196F3] rounded-full absolute top-2/4  left-0 -translate-x-2/4 -translate-y-2/4"></div>
       </div>
 
-      <div className="size-[200px] bg-[rgba(0,140,255,0.7)] absolute right-[8%] bottom-[-7%] -translate- -translate-y-0  login_animation2 lg:block hidden"></div>
+      <div className="size-[200px] bg-[rgba(0,140,255,0.7)] absolute right-[4%] bottom-[8%] -translate- -translate-y-0  login_animation2 lg:block hidden"></div>
 
-      <div className="size-[200px] bg-[rgba(0,140,255,0.7)] absolute right-[4%] bottom-[-13%] login_animation2 lg:block hidden"></div>
+      <div className="size-[200px] bg-[rgba(0,140,255,0.7)] absolute right-[1%] bottom-[3%] login_animation2 lg:block hidden"></div>
 
-      <div className="size-[200px] bg-[rgba(0,140,255,0.7)] absolute right-[-0%] bottom-[-20%] -translate- -translate-y-0  login_animation2 lg:block hidden"></div>
+      <div className="size-[200px] bg-[rgba(0,140,255,0.7)] absolute right-[-4%] bottom-[-5%] -translate- -translate-y-0  login_animation2 lg:block hidden"></div>
 
       <div className="absolute top-[-45%] right-[-30%] login_animation3 lg:block hidden">
         <picture>

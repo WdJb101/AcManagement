@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../../../Dashboard/Login/Login";
-import PopUp from "../../../feature/popup/PopUp";
+import Login from "../../../feature/Login/Login";
 import AdminLayout from "../../../feature/AdminLayout/AdminLayout";
 import AdminOverview from "../../../feature/AdminOverView/AdminOverView";
 import AdminContact from "../../../feature/AdminContact/AdminContact";
@@ -11,36 +10,36 @@ import AdminiVoucher from "../../../feature/AdminVoucher/AdminiVoucher";
 import AdminHelpCenter from "../../../feature/AdminHelpCenter/AdminHelpCenter";
 const router = createBrowserRouter([
   {
-    path: "/admin",
+    path: "/",
     element: <AdminLayout />,
     children: [
       {
-        path: "/admin/overview",
+        path: "/overview",
         element: <AdminOverview />,
       },
       {
-        path: "/admin/AdminiVoucher",
+        path: "/voucher",
         element: <AdminiVoucher />,
       },
       {
-        path: "/admin/AdminPayment",
+        path: "/payment",
         element: <AdminPayment />,
       },
       {
-        path: "/admin/AdminVoice",
+        path: "/invoice",
         element: <AdminVoice />,
       },
 
       {
-        path: "/admin/AdminSetting",
+        path: "/setting",
         element: <AdminSetting />,
       },
       {
-        path: "/admin/AdminHelpCenter",
+        path: "/help-center",
         element: <AdminHelpCenter />,
       },
       {
-        path: "/admin/AdminContact",
+        path: "/contact",
         element: <AdminContact />,
       },
     ],

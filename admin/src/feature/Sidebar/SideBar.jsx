@@ -17,11 +17,11 @@ const SideBar = () => {
           <div>
             <ul>
               <li className="pb-7">
-                <Link to="/admin/overview">
+                <Link to="overview">
                   <div className="flex gap-3 p">
                     <span
                       className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                        isActive == "/admin/overview"
+                        isActive == "/overview"
                           ? "text-[#00B8FF]"
                           : "text-[#446CCF]"
                       } `}
@@ -30,7 +30,7 @@ const SideBar = () => {
                     </span>
                     <p
                       className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
-                        isActive == "/admin/overview"
+                        isActive == "/overview"
                           ? "text-[#FF3B30]"
                           : "text-[#7C8DB5]"
                       } `}
@@ -41,12 +41,12 @@ const SideBar = () => {
                 </Link>
               </li>
               <li className="pb-7">
-                <Link to="/admin/AdminiVoucher">
+                <Link to="/voucher">
                   <div className="flex justify-between items-center">
                     <div className="flex gap-3 p">
                       <span
                         className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                          isActive == "/admin/AdminiVoucher"
+                          isActive == "/voucher"
                             ? "text-[#00B8FF]"
                             : "text-[#446CCF]"
                         } `}
@@ -56,7 +56,7 @@ const SideBar = () => {
 
                       <p
                         className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
-                          isActive == "/admin/AdminiVoucher"
+                          isActive == "/voucher"
                             ? "text-[#FF3B30]"
                             : "text-[#7C8DB5]"
                         } `}
@@ -72,12 +72,12 @@ const SideBar = () => {
                 </Link>
               </li>
               <li className="pb-7">
-                <Link to="/admin/AdminPayment">
+                <Link to="/payment">
                   <div className="flex justify-between items-center">
                     <div className="flex gap-3 p">
                       <span
                         className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                          isActive == "/admin/AdminPayment"
+                          isActive == "/payment"
                             ? "text-[#00B8FF]"
                             : "text-[#446CCF]"
                         } `}
@@ -86,7 +86,7 @@ const SideBar = () => {
                       </span>
                       <p
                         className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
-                          isActive == "/admin/AdminPayment"
+                          isActive == "/payment"
                             ? "text-[#FF3B30]"
                             : "text-[#7C8DB5]"
                         } `}
@@ -101,12 +101,12 @@ const SideBar = () => {
                 </Link>
               </li>
               <li className="pb-7">
-                <Link to="/admin/AdminVoice">
+                <Link to="/invoice">
                   <div className="flex justify-between items-center">
                     <div className="flex gap-3 p">
                       <span
                         className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                          isActive == "/admin/AdminVoice"
+                          isActive == "/invoice"
                             ? "text-[#00B8FF]"
                             : "text-[#446CCF]"
                         } `}
@@ -115,7 +115,7 @@ const SideBar = () => {
                       </span>
                       <p
                         className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
-                          isActive == "/admin/AdminVoice"
+                          isActive == "/invoice"
                             ? "text-[#FF3B30]"
                             : "text-[#7C8DB5]"
                         } `}
@@ -130,11 +130,11 @@ const SideBar = () => {
                 </Link>
               </li>
               <li className="pb-7">
-                <Link to="/admin/AdminSetting">
+                <Link to="/setting">
                   <div className="flex gap-3 p">
                     <span
                       className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                        isActive == "/admin/AdminSetting"
+                        isActive == "/setting"
                           ? "text-[#00B8FF]"
                           : "text-[#446CCF]"
                       } `}
@@ -143,7 +143,7 @@ const SideBar = () => {
                     </span>
                     <p
                       className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
-                        isActive == "/admin/AdminSetting"
+                        isActive == "/setting"
                           ? "text-[#FF3B30]"
                           : "text-[#7C8DB5]"
                       } `}
@@ -159,11 +159,11 @@ const SideBar = () => {
         <div>
           <ul>
             <li className="pb-7">
-              <Link to="/admin/AdminHelpCenter">
+              <Link to="/help-center">
                 <div className="flex gap-3">
                   <span
                     className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                      isActive == "/admin/AdminHelpCenter"
+                      isActive == "/help-center"
                         ? "text-[#00B8FF]"
                         : "text-[#446CCF]"
                     } `}
@@ -172,7 +172,7 @@ const SideBar = () => {
                   </span>
                   <p
                     className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
-                      isActive == "/admin/AdminHelpCenter"
+                      isActive == "/help-center"
                         ? "text-[#FF3B30]"
                         : "text-[#7C8DB5]"
                     } `}
@@ -183,11 +183,11 @@ const SideBar = () => {
               </Link>
             </li>
             <li className="pb-7">
-              <Link to="/admin/AdminContact">
+              <Link to="/contact">
                 <div className="flex gap-3">
                   <span
                     className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                      isActive == "/admin/AdminContact"
+                      isActive == "/contact"
                         ? "text-[#00B8FF]"
                         : "text-[#446CCF]"
                     } `}
@@ -196,7 +196,7 @@ const SideBar = () => {
                   </span>
                   <p
                     className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
-                      isActive == "/admin/AdminContact"
+                      isActive == "/contact"
                         ? "text-[#FF3B30]"
                         : "text-[#7C8DB5]"
                     } `}
