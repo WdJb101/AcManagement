@@ -1,8 +1,8 @@
-const Transaction = require("../../model/transactionModel");
-const Account = require("../../model/accountModel");
-const tryCatch = require("../../utils/tryCatch");
+const Transaction = require("../../../model/transactionModel");
+const Account = require("../../../model/accountModel");
+const tryCatch = require("../../../utils/tryCatch");
 const appError = require("http-errors");
-const appStatus = require("../../utils/appStatus");
+const appStatus= require("../../../utils/appStatus")
 const { parseISO, addDays } = require("date-fns");
 //new trans
 const newTransaction = tryCatch(async (req, res, next) => {

@@ -1,4 +1,7 @@
-class NotFoundError extends Error {
+  
+  
+  
+  class NotFoundError extends Error {
     constructor(message) {
       super(message);
   

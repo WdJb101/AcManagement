@@ -9,7 +9,8 @@ const session = require("express-session");
 dotenv.config();
 const cors = require("cors");
 const errorHandler = require("./error/errorHandler");
-const route = require("./routes/index");
+const route = require("./v1/routes/index");
+const route2 = require("./v2/routes/index");
 const app = express();
 app.set("view engine", "ejs");
 
@@ -65,14 +66,14 @@ app.use(
     origin: allowedOrigins,
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: false,
-    allowedHeaders:""
+    allowedHeaders: "",
   })
 );
 
 // app environment end######
 app.get("/", (req, res) => {
-
   res.render("index", { title: "Account Management" });
 });
 app.use(route);
+app.use(route2);
 app.use(errorHandler);

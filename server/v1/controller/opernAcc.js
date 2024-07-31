@@ -1,7 +1,7 @@
-const Account = require("../model/accountModel");
-const tryCatch = require("../utils/tryCatch");
+const Account = require("../../model/accountModel");
+const tryCatch = require("../../utils/tryCatch");
 const appError = require("http-errors");
-const appStatus = require("../utils/appStatus");
+const appStatus = require("../../utils/appStatus");
 
 // new Acc
 const newAcc = tryCatch(async (req, res, next) => {

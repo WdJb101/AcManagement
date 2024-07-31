@@ -1,7 +1,7 @@
 const express = require("express");
 const _ = express.Router();
-const assetAsyncLiability = require("../../../middle/assetAsyncLiability");
-const revenewAsyncExpense = require("../../../middle/revenueAsyncExpense");
+const assetAsyncLiability = require("../../../../middle/assetAsyncLiability");
+const revenewAsyncExpense = require("../../../../middle/revenueAsyncExpense");
 const {
   newTransaction,
   monthlyTranscation,

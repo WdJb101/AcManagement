@@ -2,11 +2,11 @@ const {
   Cashbook,
   Cashdebit,
   Cashcredit,
-} = require("../../model/cashBookModel");
+} = require("../../../model/cashBookModel");
 
-const tryCatch = require("../../utils/tryCatch");
+const tryCatch = require("../../../utils/tryCatch");
 const appError = require("http-errors");
-const appStatus = require("../../utils/appStatus");
+const appStatus = require("../../../utils/appStatus");
 const { parseISO, addDays } = require("date-fns");
 
 const postCashbook = tryCatch(async (req, res, next) => {
