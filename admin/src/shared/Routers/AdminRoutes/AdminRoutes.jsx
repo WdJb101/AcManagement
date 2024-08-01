@@ -1,13 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../../../feature/Login/Login";
 import AdminLayout from "../../../feature/AdminLayout/AdminLayout";
-import AdminOverview from "../../../feature/AdminOverView/AdminOverView";
-import AdminContact from "../../../feature/AdminContact/AdminContact";
-import AdminVoice from "../../../feature/AdminInvoice/AdminVoice";
-import AdminPayment from "../../../feature/AdminPayment/AdminPayment";
-import AdminSetting from "../../../feature/AdminSetting/AdminSetting";
-import AdminiVoucher from "../../../feature/AdminVoucher/AdminiVoucher";
-import AdminHelpCenter from "../../../feature/AdminHelpCenter/AdminHelpCenter";
+
+import Overview from "../../../feature/OverView/OverView";
+import Setting from "../../../feature/Setting/Setting";
+import Invoice from "../../../feature/Invoice/Invoice";
+import Voucher from "../../../feature/Voucher/Voucher";
+import Payment from "../../../feature/Payment/Payment";
+import Contact from "../../../feature/Contact/Contact";
+import HelpCenter from "../../../feature/Help-center/HelpCenter";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,32 +17,32 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/overview",
-        element: <AdminOverview />,
+        element: <Overview />,
       },
       {
         path: "/voucher",
-        element: <AdminiVoucher />,
+        element: <Voucher />,
       },
       {
         path: "/payment",
-        element: <AdminPayment />,
+        element: <Payment />,
       },
       {
         path: "/invoice",
-        element: <AdminVoice />,
+        element: <Invoice />,
       },
 
       {
         path: "/setting",
-        element: <AdminSetting />,
+        element: <Setting />,
       },
       {
         path: "/help-center",
-        element: <AdminHelpCenter />,
+        element: <HelpCenter />,
       },
       {
         path: "/contact",
-        element: <AdminContact />,
+        element: <Contact />,
       },
     ],
   },

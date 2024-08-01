@@ -9,7 +9,7 @@ const SideBar = () => {
 
   return (
     <>
-      <div className=" bg-white h-screen flex flex-col justify-between items-center">
+      <div className=" bg-white flex flex-col justify-between items-center h-[100%]">
         <div>
           <h2 className="text-4xl text-primary font-bold py-[50px] ">
             WeeCash
@@ -29,9 +29,9 @@ const SideBar = () => {
                       <TypeIcon type="chart" />
                     </span>
                     <p
-                      className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
+                      className={`text-base font-medium hover:text-[#0058B3] duration-150 ${
                         isActive == "/overview"
-                          ? "text-[#FF3B30]"
+                          ? "text-[#0058B3]"
                           : "text-[#7C8DB5]"
                       } `}
                     >
@@ -55,9 +55,9 @@ const SideBar = () => {
                       </span>
 
                       <p
-                        className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
+                        className={`text-base font-medium hover:text-[#0058B3] duration-150 ${
                           isActive == "/voucher"
-                            ? "text-[#FF3B30]"
+                            ? "text-[#0058B3]"
                             : "text-[#7C8DB5]"
                         } `}
                       >
@@ -85,9 +85,9 @@ const SideBar = () => {
                         <TypeIcon type="box" />
                       </span>
                       <p
-                        className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
+                        className={`text-base font-medium hover:text-[#0058B3] duration-150 ${
                           isActive == "/payment"
-                            ? "text-[#FF3B30]"
+                            ? "text-[#0058B3]"
                             : "text-[#7C8DB5]"
                         } `}
                       >
@@ -111,12 +111,12 @@ const SideBar = () => {
                             : "text-[#446CCF]"
                         } `}
                       >
-                        <TypeIcon type="setting" />
+                        <TypeIcon type="notes" />
                       </span>
                       <p
-                        className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
+                        className={`text-base font-medium hover:text-[#0058B3] duration-150 ${
                           isActive == "/invoice"
-                            ? "text-[#FF3B30]"
+                            ? "text-[#0058B3]"
                             : "text-[#7C8DB5]"
                         } `}
                       >
@@ -139,12 +139,12 @@ const SideBar = () => {
                           : "text-[#446CCF]"
                       } `}
                     >
-                      <TypeIcon type="notes" />
+                      <TypeIcon type="setting" />
                     </span>
                     <p
-                      className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
+                      className={`text-base font-medium hover:text-[#0058B3] duration-150 ${
                         isActive == "/setting"
-                          ? "text-[#FF3B30]"
+                          ? "text-[#0058B3]"
                           : "text-[#7C8DB5]"
                       } `}
                     >
@@ -171,9 +171,9 @@ const SideBar = () => {
                     <TypeIcon type="info" />
                   </span>
                   <p
-                    className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
+                    className={`text-base font-medium hover:text-[#0058B3] duration-150 ${
                       isActive == "/help-center"
-                        ? "text-[#FF3B30]"
+                        ? "text-[#0058B3]"
                         : "text-[#7C8DB5]"
                     } `}
                   >
@@ -195,9 +195,9 @@ const SideBar = () => {
                     <TypeIcon type="chat" />
                   </span>
                   <p
-                    className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
+                    className={`text-base font-medium hover:text-[#0058B3] duration-150 ${
                       isActive == "/contact"
-                        ? "text-[#FF3B30]"
+                        ? "text-[#0058B3]"
                         : "text-[#7C8DB5]"
                     } `}
                   >
@@ -211,14 +211,14 @@ const SideBar = () => {
                 <div className="flex gap-3">
                   <span
                     className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                      isActive == "/popup" ? "text-[#00B8FF]" : "text-[#446CCF]"
+                      isActive == "/popup" ? "text-[#00B8FF]" : "text-[#FF3B30]"
                     } `}
                   >
                     <TypeIcon type="logout" />
                   </span>
                   <p
-                    className={`text-base font-medium hover:text-[#FF3B30] duration-150${
-                      isActive == "/popup" ? "text-[#FF3B30]" : "text-[#7C8DB5]"
+                    className={`text-base font-medium hover:text-[#0058B3] duration-150 ${
+                      isActive == "/popup" ? "text-[#FF3B30]" : "text-[#FF3B30]"
                     } `}
                   >
                     Log out
