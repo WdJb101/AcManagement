@@ -2,7 +2,7 @@ const Transaction = require("../../../model/transactionModel");
 const Account = require("../../../model/accountModel");
 const tryCatch = require("../../../utils/tryCatch");
 const appError = require("http-errors");
-const appStatus= require("../../../utils/appStatus")
+const appStatus = require("../../../utils/appStatus");
 const { parseISO, addDays } = require("date-fns");
 //new trans
 const newTransaction = tryCatch(async (req, res, next) => {
@@ -94,10 +94,9 @@ const monthlyTranscation = tryCatch(async (req, res, next) => {
   const currentMonth = currentDate.getMonth() + 1;
 
   // If 'this_month' is not provided, default to the current month
-  const monthToQuery =
-    parseISO(this_month).getMonth() + 1
-      ? parseISO(this_month).getMonth() + 1
-      : currentMonth;
+  const monthToQuery = this_month
+    ? parseISO(this_month).getMonth() + 1
+    : currentMonth;
 
   // Get the first and last day of the specified month
   const firstDayOfMonth = new Date(currentYear, monthToQuery - 1, 1);
