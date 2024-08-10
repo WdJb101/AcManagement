@@ -41,6 +41,37 @@ const SideBar = () => {
                 </Link>
               </li>
               <li className="pb-7">
+                <Link to="/admin/ledger">
+                  <div className="flex justify-between items-center">
+                    <div className="flex gap-3 p">
+                      <span
+                        className={`text-2xl hover:text-[#00B8FF] duration-150 ${
+                          isActive == "/admin/ledger"
+                            ? "text-[#00B8FF]"
+                            : "text-[#446CCF]"
+                        } `}
+                      >
+                        <TypeIcon type="ledger" />
+                      </span>
+
+                      <p
+                        className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
+                          isActive == "/admin/ledger"
+                            ? "text-[#FF3B30]"
+                            : "text-[#7C8DB5]"
+                        } `}
+                      >
+                        Ledger
+                      </p>
+                    </div>
+
+                    {/* <span className="text-[#7C8DB5] text-sm">
+                      <TypeIcon type="downarrow" />
+                    </span> */}
+                  </div>
+                </Link>
+              </li>
+              <li className="pb-7">
                 <Link to="/admin/AdminiVoucher">
                   <div className="flex justify-between items-center">
                     <div className="flex gap-3 p">

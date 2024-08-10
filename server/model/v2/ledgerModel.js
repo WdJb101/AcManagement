@@ -4,13 +4,10 @@ const Schema = mongoose.Schema;
 const accountSchema = new Schema(
   {
     ledger_name: { type: String, required: true },
-
     balance_type: {
       type: String,
-
       enum: ["dr", "cr"],
     },
-
     acc_group: {
       type: String,
       required: true,

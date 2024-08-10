@@ -9,6 +9,7 @@ import AdminPayment from "../../../feature/AdminPayment/AdminPayment";
 import AdminSetting from "../../../feature/AdminSetting/AdminSetting";
 import AdminiVoucher from "../../../feature/AdminVoucher/AdminiVoucher";
 import AdminHelpCenter from "../../../feature/AdminHelpCenter/AdminHelpCenter";
+import AdminLedger from "../../../feature/AdminLedger/containers/AdminLedger";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/overview",
         element: <AdminOverview />,
+      },
+      {
+        path: "/admin/ledger",
+        element: <AdminLedger></AdminLedger>,
       },
       {
         path: "/admin/AdminiVoucher",
