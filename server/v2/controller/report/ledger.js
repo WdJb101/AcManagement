@@ -13,7 +13,7 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
   let options = {
     select: math,
     lean: true,
-    limit: limit || 10,
+    limit: limit || 100,
     page: page || 1,
   };
 
@@ -22,7 +22,7 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
     $or: [{ ledger_type }, { cr_acc: ledger_type }],
     posting_date: { $gte: from_date, $lte: to_date },
   };
-
+  //?###### check ####
   const ledgers = await Ledger.find({});
   const ledgerNames = ledgers.map((ledger) => ledger.ledger_name);
 
@@ -31,18 +31,42 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
   if (!isLedgerExists) {
     return next(new NotFoundError("Account Name Not Found"));
   }
-  const trans = await Transcation_n.paginate(query, options);
-  console.log({
-    totalDocs: trans.totalDocs,
-    limit: trans.limit,
-    totalPages: trans.totalPages,
-    page: trans.page,
-    pagingCounter: trans.pagingCounter,
-    hasPrevPage: trans.hasPrevPage,
-    hasNextPage: trans.hasNextPage,
-    prevPage: trans.prevPage,
-    nextPage: trans.nextPage,
+  //?###### drSum & crSum####
+  const fromDate = new Date(from_date);
+
+  const results = await Transcation_n.aggregate([
+    {
+      $match: {
+        $or: [{ ledger_type }, { cr_acc: ledger_type }],
+        posting_date: { $lt: fromDate },
+      },
+    },
+    {
+      $group: {
+        _id: "$balance_type",
+        totalAmount: { $sum: "$amount" },
+      },
+    },
+  ]);
+
+  let drSum = 0;
+  let crSum = 0;
+  results.forEach((result) => {
+    if (result._id === "dr") {
+      drSum = result.totalAmount;
+    } else if (result._id === "cr") {
+      crSum = result.totalAmount;
+    }
   });
+
+  const openning = {
+    dr_opening: drSum > crSum ? drSum - crSum : 0,
+    cr_opening: crSum > drSum ? crSum - drSum : 0,
+  };
+  //?######drSum & crSum __end ####
+
+  //?###### find && sum ####
+  const trans = await Transcation_n.paginate(query, options);
 
   let meow = [];
   const dr_amount = trans.docs.reduce((prev, next) => {
@@ -79,6 +103,7 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
       });
     }
   });
+  //? ### find Sum end####
   appStatus(
     200,
     {
@@ -88,6 +113,10 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
       cr_amount,
       from_date,
       to_date,
+      sum: {
+        dr_sum: drSum + openning.dr_opening,
+        cr_sum: crSum + openning.cr_opening,
+      },
       paginate: {
         totalDocs: trans.totalDocs,
         limit: trans.limit,
@@ -99,6 +128,7 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
         prevPage: trans.prevPage,
         nextPage: trans.nextPage,
       },
+      openning,
     },
     req,
     res,
