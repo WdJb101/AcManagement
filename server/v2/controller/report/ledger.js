@@ -3,6 +3,7 @@ const { Ledger } = require("../../../model/v2/ledgerModel");
 const { Transcation_n } = require("../../../model/v2/transactionModel");
 const appStatus = require("../../../utils/appStatus");
 const tryCatch = require("../../../utils/tryCatch");
+const { NotFoundError } = require("../../../error/customError");
 
 const getLedgerRepo = tryCatch(async (req, res, next) => {
   const { ledger_type, from_date, to_date, page, limit, fields } = req.query;
@@ -31,39 +32,6 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
   if (!isLedgerExists) {
     return next(new NotFoundError("Account Name Not Found"));
   }
-  //?###### drSum & crSum####
-  const fromDate = new Date(from_date);
-
-  const results = await Transcation_n.aggregate([
-    {
-      $match: {
-        $or: [{ ledger_type }, { cr_acc: ledger_type }],
-        posting_date: { $lt: fromDate },
-      },
-    },
-    {
-      $group: {
-        _id: "$balance_type",
-        totalAmount: { $sum: "$amount" },
-      },
-    },
-  ]);
-
-  let drSum = 0;
-  let crSum = 0;
-  results.forEach((result) => {
-    if (result._id === "dr") {
-      drSum = result.totalAmount;
-    } else if (result._id === "cr") {
-      crSum = result.totalAmount;
-    }
-  });
-
-  const openning = {
-    dr_opening: drSum > crSum ? drSum - crSum : 0,
-    cr_opening: crSum > drSum ? crSum - drSum : 0,
-  };
-  //?######drSum & crSum __end ####
 
   //?###### find && sum ####
   const trans = await Transcation_n.paginate(query, options);
@@ -104,6 +72,55 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
     }
   });
   //? ### find Sum end####
+  //?###### drSum & crSum & opening closing ####
+  const fromDate = new Date(from_date);
+
+  const results = await Transcation_n.aggregate([
+    {
+      $match: {
+        $or: [{ ledger_type }, { cr_acc: ledger_type }],
+        posting_date: { $lt: fromDate },
+      },
+    },
+    {
+      $group: {
+        _id: "$balance_type",
+        totalAmount: { $sum: "$amount" },
+      },
+    },
+  ]);
+
+  let drSum = 0;
+  let crSum = 0;
+  results.forEach((result) => {
+    if (result._id === "dr") {
+      drSum = result.totalAmount;
+    } else if (result._id === "cr") {
+      crSum = result.totalAmount;
+    }
+  });
+
+  const openning = {
+    dr_opening: drSum > crSum ? drSum - crSum : 0,
+    cr_opening: crSum > drSum ? crSum - drSum : 0,
+  };
+  const sum = {
+    dr_sum: drSum + openning.dr_opening,
+    cr_sum: crSum + openning.cr_opening,
+  };
+
+  const closing = {
+    dr_closing: sum.cr_sum,
+    cr_closing: sum.dr_sum,
+  };
+
+  const total = {
+    dr_sum_clg: sum.dr_sum + closing.dr_closing,
+    cr_sum_clg: sum.cr_sum + closing.cr_closing,
+  };
+  console.log(total);
+  //?######drSum & crSum & opening closing __end ####
+
   appStatus(
     200,
     {
@@ -113,10 +130,10 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
       cr_amount,
       from_date,
       to_date,
-      sum: {
-        dr_sum: drSum + openning.dr_opening,
-        cr_sum: crSum + openning.cr_opening,
-      },
+      openning,
+      sum,
+      closing,
+      total,
       paginate: {
         totalDocs: trans.totalDocs,
         limit: trans.limit,
@@ -128,7 +145,6 @@ const getLedgerRepo = tryCatch(async (req, res, next) => {
         prevPage: trans.prevPage,
         nextPage: trans.nextPage,
       },
-      openning,
     },
     req,
     res,
