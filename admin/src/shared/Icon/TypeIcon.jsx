@@ -12,6 +12,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { BsChatDotsFill } from "react-icons/bs";
 import { IoIosLogOut } from "react-icons/io";
 import { FaBook } from 'react-icons/fa';
+import { GrTransaction } from "react-icons/gr";
 const iconMap = {
   info: CiCircleInfo,
   eyeopen: IoIosEye,
@@ -24,7 +25,8 @@ const iconMap = {
   downarrow: IoIosArrowDown,
   chat: BsChatDotsFill,
   logout: IoIosLogOut,
-  ledger: FaBook
+  ledger: FaBook,
+  transaction: GrTransaction
 };
 
 const TypeIcon = React.memo(({ type, className, size }) => {

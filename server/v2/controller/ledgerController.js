@@ -23,17 +23,20 @@ const addLedger = tryCatch(async (req, res, next) => {
 //get
 const getLedger = tryCatch(async (req, res, next) => {
   const { bc } = req.query;
-
+  console.log( bc);
   let get_all;
-  if (bc === bc) {
+  if (bc) {
+    console.log("1")
     get_all = await Ledger.find({ balance_type: "dr" }).select(
-      "-_id -createdAt -__v -updatedAt"
+      " -createdAt -__v -updatedAt"
     );
   } else {
+    console.log("2")
     get_all = await Ledger.find();
   }
 
   if (!get_all.length) {
+    console.log("dsfsdf");
     return next(new NotFoundError("Empty"));
   }
 

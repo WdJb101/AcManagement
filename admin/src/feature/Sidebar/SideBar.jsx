@@ -1,11 +1,11 @@
 import React from "react";
 import TypeIcon from "../../shared/Icon/TypeIcon";
 import { Link, useLocation } from "react-router-dom";
-
+// import { GrTransaction } from "react-icons/gr";
 const SideBar = () => {
   const location = useLocation();
   const isActive = location.pathname;
-  console.log(isActive);
+
 
   return (
     <>
@@ -64,10 +64,33 @@ const SideBar = () => {
                         Ledger
                       </p>
                     </div>
+                  </div>
+                </Link>
+              </li>
+              <li className="pb-7">
+                <Link to="/admin/transaction">
+                  <div className="flex justify-between items-center">
+                    <div className="flex gap-3 p">
+                      <span
+                        className={`text-2xl hover:text-[#00B8FF] duration-150 ${
+                          isActive == "/admin/transaction"
+                            ? "text-[#00B8FF]"
+                            : "text-[#446CCF]"
+                        } `}
+                      >
+                        <TypeIcon type="transaction" />
+                      </span>
 
-                    {/* <span className="text-[#7C8DB5] text-sm">
-                      <TypeIcon type="downarrow" />
-                    </span> */}
+                      <p
+                        className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
+                          isActive == "/admin/transaction"
+                            ? "text-[#FF3B30]"
+                            : "text-[#7C8DB5]"
+                        } `}
+                      >
+                        Transaction
+                      </p>
+                    </div>
                   </div>
                 </Link>
               </li>
