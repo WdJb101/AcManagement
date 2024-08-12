@@ -4,7 +4,9 @@ const { NotFoundError, BadRequestError } = require("../../error/customError");
 const appStatus = require("../../utils/appStatus");
 const { Transcation_n } = require("../../model/v2/transactionModel");
 const { parseISO, addDays } = require("date-fns");
+
 // new transcation
+
 const addTrans = tryCatch(async (req, res, next) => {
   const data = req.body;
 
@@ -17,16 +19,18 @@ const addTrans = tryCatch(async (req, res, next) => {
     return next(new NotFoundError("Account Name Not Found"));
   }
 
-  // Create and save new transaction
+  data.v_no = Math.floor(100000 + Math.random() * 900000).toString();
+  
   const newTrans = new Transcation_n(data);
   const savedTrans = await newTrans.save();
 
   if (!savedTrans) {
     return next(new BadRequestError("Try Again"));
   }
-  // Send success status
+
   appStatus(201, savedTrans, req, res, next);
 });
+
 
 // delete
 const delTrans = tryCatch(async (req, res, next) => {

@@ -95,12 +95,12 @@ const SideBar = () => {
                 </Link>
               </li>
               <li className="pb-7">
-                <Link to="/admin/AdminiVoucher">
+                <Link to="/admin/voucher">
                   <div className="flex justify-between items-center">
                     <div className="flex gap-3 p">
                       <span
                         className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                          isActive == "/admin/AdminiVoucher"
+                          isActive == "/admin/Voucher"
                             ? "text-[#00B8FF]"
                             : "text-[#446CCF]"
                         } `}
@@ -110,7 +110,7 @@ const SideBar = () => {
 
                       <p
                         className={`text-base font-medium hover:text-[#FF3B30] duration-150 ${
-                          isActive == "/admin/AdminiVoucher"
+                          isActive == "/admin/voucher"
                             ? "text-[#FF3B30]"
                             : "text-[#7C8DB5]"
                         } `}

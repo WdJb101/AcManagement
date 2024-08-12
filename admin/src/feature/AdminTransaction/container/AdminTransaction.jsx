@@ -9,12 +9,14 @@ import { IoPrintSharp } from "react-icons/io5";
 import { IoMdRefreshCircle } from "react-icons/io";
 import ReviceVouchar from "../components/ReviceVouchar";
 import { useReactToPrint } from "react-to-print";
+import { IoDocumentTextOutline } from "react-icons/io5"; // Import this icon
 
 const AdminTransaction = () => {
   const [loader, setLoader] = useState(false);
   const [ledger, setLedger] = useState([]);
   const [preview, setPreview] = useState(false);
   const componentRef = useRef();
+  const [isSave, setIsSave] = useState(false);
 
   const [formData, setFormData] = useState({
     posting_date: "",
@@ -23,6 +25,7 @@ const AdminTransaction = () => {
     cr_acc: "",
     amount: "",
     narration: "",
+    v_no:""
   });
 
   const handleChange = (e) => {
@@ -31,34 +34,33 @@ const AdminTransaction = () => {
       ...prevData,
       [name]: value,
     }));
-   
   };
 
+  //  for narration
+  useEffect(() => {
+    if (formData.ledger_type && formData.cr_acc) {
+      const newValue = `${formData.ledger_type} Paid To  ${formData.cr_acc}`;
+      setFormData((prevData) => ({
+        ...prevData,
+        narration: newValue,
+      }));
+    }
+  }, [formData.ledger_type, formData.cr_acc]);
 
-  useEffect(()=>{
-      if(formData.ledger_type && formData.cr_acc ){
-          const newValue= `${formData.ledger_type} Paid To  ${formData.cr_acc}`;
-          setFormData((prevData) => ({
-            ...prevData,
-            narration: newValue,
-          }));
-      }
-  },[formData.ledger_type,formData.cr_acc])
+  //  for post
   const handleAdd = async () => {
     try {
       setLoader(true);
       const res = await api.post("/transaction", formData);
       if (res.status === 201) {
         setLoader(false);
+        console.log(res.data.data.v_no)
+        setFormData((prevData) => ({
+          ...prevData,
+          v_no : res.data.data.v_no,
+        }));
         toast.success("Successfully Added ledger");
-        setFormData({
-          posting_date: "",
-          transation_with: "",
-          ledger_type: "",
-          cr_acc: "",
-          amount: "",
-          narration: "",
-        });
+        setIsSave(true);
       }
     } catch (error) {
       toast.error("Add Failed");
@@ -66,7 +68,7 @@ const AdminTransaction = () => {
     }
     console.log(res);
   };
-
+  //  for get
   const ledgerFn = async () => {
     try {
       const res = await api.get("/ledger");
@@ -75,19 +77,42 @@ const AdminTransaction = () => {
       console.log(error);
     }
   };
-
+  //  for print
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
+  const onPrint = () => {
+    if (isSave) {
+      setPreview(true);
+      handlePrint()
+    } else {
+      toast.error("Please Save First");
+    }
+  };
+
+
+  // for refresh
+  const handleRefresh = () => {
+    setPreview(false);
+    setIsSave(false);
+    setFormData({
+      posting_date: "",
+      transation_with: "",
+      ledger_type: "",
+      cr_acc: "",
+      amount: "",
+      narration: "",
+    });
+  };
 
   return (
-    <div className="container px-8 lg:py-10 min-h-screen bg-[#F4F5F9] mx-auto">
+    <div className="container lg:px-7 px-4 lg:py-4 min-h-screen bg-[#F4F5F9] mx-auto">
       <div>
-        <h1 className="text-center lg:py-10  py-4 text-3xl text-[#004282] font-bold ">
+        <h1 className="text-center lg:py-4  py-4 text-3xl text-[#004282] font-bold ">
           Transaction
         </h1>
       </div>
-      <div className="max-w-5xl gap-8 lg:flex   justify-between mx-auto">
+      <div className="max-w-[1050px] gap-8 lg:flex   justify-between mx-auto">
         <div className="lg:w-[40%]">
           <div className="mt-4">
             <h1 className="font-semibold">Posting Date</h1>
@@ -182,13 +207,13 @@ const AdminTransaction = () => {
                 value={formData.narration}
                 onChange={handleChange}
                 name="narration"
-                placeholder="Enter Narration"
+                placeholder="Please Select Ledger Type and CR Account"
                 className="border focus:outline-none w-full py-2 rounded-lg px-4 text-base"
               />
             </div>
           </div>
 
-          <div className="py-3 flex gap-1 justify-between">
+          <div className="py-6 flex gap-1 justify-between">
             <button
               onClick={handleAdd}
               className="py-[4px] flex  items-center gap-1  px-2 rounded-md bg-[#004282] hover:text-[#004282] transition-colors text-xs text-white hover:bg-gray-300"
@@ -204,14 +229,14 @@ const AdminTransaction = () => {
               <p className="font-semibold">Preview</p>
             </button>
             <button
-              onClick={handlePrint}
+              onClick={onPrint}
               className="py-[4px] flex  items-center gap-1  px-2 rounded-md bg-[#004282] hover:text-[#004282] transition-colors text-xs text-white hover:bg-gray-300"
             >
               <IoPrintSharp className="text-base font-bold" />
               <p className="font-semibold">Print</p>
             </button>
             <button
-              onClick={() => window.location.reload()}
+              onClick={handleRefresh}
               className="py-[4px] flex  items-center gap-1  px-2 rounded-md bg-[#004282] hover:text-[#004282] transition-colors text-xs text-white hover:bg-gray-300"
             >
               <IoMdRefreshCircle className="text-base font-bold" />
@@ -219,12 +244,26 @@ const AdminTransaction = () => {
             </button>
           </div>
         </div>
-        {preview && (
-          <div
-            ref={componentRef}
-            className="transition-all w-[50%] duration-500"
-          >
-            <ReviceVouchar formData={formData} />
+        {preview ? (
+          <div className="flex items-center  justify-center lg:w-[60%] h-full py-10">
+            <div ref={componentRef} className="transition-all w-full duration-500">
+              <ReviceVouchar formData={formData} />
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center  justify-center lg:w-[60%] h-full py-10">
+            <div className="text-center bg-white rounded-lg  p-6 border border-dashed border-[#7E4282]">
+              <div className="text-[#7E4282] text-4xl mb-4">
+                <IoDocumentTextOutline className="mx-auto" />
+              </div>
+              <h1 className="text-[#004282] font-bold text-xl mb-2">
+                Transaction Received Voucher
+              </h1>
+              <p className="text-gray-500 text-base">
+                Your transaction received voucher will be displayed here once
+                you have selected and saved a transaction.
+              </p>
+            </div>
           </div>
         )}
       </div>

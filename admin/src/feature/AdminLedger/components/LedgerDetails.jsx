@@ -20,7 +20,7 @@ const LedgerDetails = ({ ledgerData, fetchData }) => {
     <div>
       <div>
         <h1
-          className={`font-semibold px-2 md:px-0  text-xl py-5  capitalize text-center flex justify-center`}
+          className={`font-semibold px-2 md:px-0  text-xl py-5  capitalize  flex justify-center`}
         >
           Ledger List
           <div>
@@ -31,10 +31,10 @@ const LedgerDetails = ({ ledgerData, fetchData }) => {
           <table className="min-w-full shadow-md rounded-lg overflow-hidden">
             <thead>
               <tr className="border-b font-semibold">
-                <th className="p-4 text-center text-gray-600"> Name</th>
-                <th className="p-4 text-center text-gray-600">Category</th>
-                <th className="p-4 text-center text-gray-600"> Type</th>
-                <th className="p-4 text-center text-gray-600">Action</th>
+                <th className=" text-gray-600"> Name</th>
+                <th className=" text-gray-600">Category</th>
+                <th className="  text-gray-600"> Type</th>
+                <th className=" text-gray-600">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -43,17 +43,17 @@ const LedgerDetails = ({ ledgerData, fetchData }) => {
                   key={i}
                   className="border-b border-gray-200 hover:bg-gradient-to-r from-gray-50 to-gray-100 transition-all duration-200"
                 >
-                  <td className="p-4 text-gray-800 font-semibold capitalize text-center align-middle">
+                  <td className="p-4 text-gray-800 font-semibold capitalize  align-middle">
                     {br?.ledger_name}
                   </td>
-                  <td className="p-4 text-gray-800 font-semibold capitalize text-center align-middle">
+                  <td className="p-4 text-gray-800 font-semibold capitalize  align-middle">
                     {br?.acc_group}
                   </td>
-                  <td className="p-4 text-gray-800 font-semibold capitalize text-center align-middle">
+                  <td className="p-4 text-gray-800 font-semibold capitalize  align-middle">
                     {br?.balance_type === "dr" ? "Debit" : "Credit"}
                   </td>
 
-                  <td className="p-4 text-center align-middle">
+                  <td className="p-4  align-middle">
                     <button onClick={() => handleDelete(br?._id)}>
                       <RiChatDeleteFill className="text-red-600 text-xl"></RiChatDeleteFill>
                     </button>

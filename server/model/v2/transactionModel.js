@@ -12,6 +12,7 @@ const transactionSchema = new Schema(
     amount: { type: Number, default: 0 },
     narration: { type: String, default: "" },
     balance_type: { type: String, enum: ["dr", "cr"] },
+    transaction_type: { type: String, default: "" } 
   },
   {
     timestamps: true,

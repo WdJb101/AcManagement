@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         element: <AdminTransaction/>,
       },
       {
-        path: "/admin/AdminiVoucher",
+        path: "/admin/voucher",
         element: <AdminiVoucher />,
       },
       {
