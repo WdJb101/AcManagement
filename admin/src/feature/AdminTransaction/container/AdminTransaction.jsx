@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import  { useState, useRef, useEffect } from "react";
 import api from "../../../axiosApi/api";
-import { BiMessageAltAdd } from "react-icons/bi";
 import toast from "react-hot-toast";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { CiSaveDown2 } from "react-icons/ci";
 import { MdPreview } from "react-icons/md";
 import { IoPrintSharp } from "react-icons/io5";
 import { IoMdRefreshCircle } from "react-icons/io";
 import ReviceVouchar from "../components/ReviceVouchar";
 import { useReactToPrint } from "react-to-print";
-import { IoDocumentTextOutline } from "react-icons/io5"; // Import this icon
+import { IoDocumentTextOutline } from "react-icons/io5"; 
 
 const AdminTransaction = () => {
   const [loader, setLoader] = useState(false);
@@ -17,7 +15,6 @@ const AdminTransaction = () => {
   const [preview, setPreview] = useState(false);
   const componentRef = useRef();
   const [isSave, setIsSave] = useState(false);
-
   const [formData, setFormData] = useState({
     posting_date: "",
     transation_with: "",
@@ -25,7 +22,7 @@ const AdminTransaction = () => {
     cr_acc: "",
     amount: "",
     narration: "",
-    v_no:""
+    v_no: "",
   });
 
   const handleChange = (e) => {
@@ -54,10 +51,10 @@ const AdminTransaction = () => {
       const res = await api.post("/transaction", formData);
       if (res.status === 201) {
         setLoader(false);
-        console.log(res.data.data.v_no)
+        console.log(res.data.data.v_no);
         setFormData((prevData) => ({
           ...prevData,
-          v_no : res.data.data.v_no,
+          v_no: res.data.data.v_no,
         }));
         toast.success("Successfully Added ledger");
         setIsSave(true);
@@ -66,7 +63,6 @@ const AdminTransaction = () => {
       toast.error("Add Failed");
       setLoader(false);
     }
-    console.log(res);
   };
   //  for get
   const ledgerFn = async () => {
@@ -84,12 +80,11 @@ const AdminTransaction = () => {
   const onPrint = () => {
     if (isSave) {
       setPreview(true);
-      handlePrint()
+      handlePrint();
     } else {
       toast.error("Please Save First");
     }
   };
-
 
   // for refresh
   const handleRefresh = () => {
@@ -245,8 +240,11 @@ const AdminTransaction = () => {
           </div>
         </div>
         {preview ? (
-          <div className="flex items-center  justify-center lg:w-[60%] h-full py-10">
-            <div ref={componentRef} className="transition-all w-full duration-500">
+          <div className="flex items-center  justify-center lg:w-[60%]   h-full py-10">
+            <div
+              ref={componentRef}
+              className="transition-all  print:h-full w-full duration-500"
+            >
               <ReviceVouchar formData={formData} />
             </div>
           </div>

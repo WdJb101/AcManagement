@@ -119,9 +119,9 @@ const SideBar = () => {
                       </p>
                     </div>
 
-                    <span className="text-[#7C8DB5] text-sm">
+                    {/* <span className="text-[#7C8DB5] text-sm">
                       <TypeIcon type="downarrow" />
-                    </span>
+                    </span> */}
                   </div>
                 </Link>
               </li>

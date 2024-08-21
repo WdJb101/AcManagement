@@ -41,7 +41,7 @@ const LedgerDetails = ({ ledgerData, fetchData }) => {
               {ledgerData?.map((br, i) => (
                 <tr
                   key={i}
-                  className="border-b border-gray-200 hover:bg-gradient-to-r from-gray-50 to-gray-100 transition-all duration-200"
+                  className="border-b text-center border-gray-200 hover:bg-gradient-to-r from-gray-50 to-gray-100 transition-all duration-200"
                 >
                   <td className="p-4 text-gray-800 font-semibold capitalize  align-middle">
                     {br?.ledger_name}

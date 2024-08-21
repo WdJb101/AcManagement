@@ -22,7 +22,6 @@ const transactionSchema = new Schema(
     },
     transaction_type: {
       type: String,
-
       enum: ["dr", "cr"],
     },
     debit: {

@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../../../Dashboard/Login/Login";
-import PopUp from "../../../feature/popup/PopUp";
 import AdminLayout from "../../../feature/AdminLayout/AdminLayout";
 import AdminOverview from "../../../feature/AdminOverView/AdminOverView";
 import AdminContact from "../../../feature/AdminContact/AdminContact";
