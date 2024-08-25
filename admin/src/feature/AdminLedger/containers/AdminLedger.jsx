@@ -4,6 +4,8 @@ import api from "../../../axiosApi/api";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import toast from "react-hot-toast";
 import LedgerDetails from "../components/LedgerDetails";
+import { useLocation, useNavigate } from "react-router-dom";
+import Heading from "../../../shared/components/Heading";
 const AdminLedger = () => {
   const [loader, setLoader] = useState(false);
   const [ledgerData, setLedgerData] = useState([]);
@@ -11,7 +13,9 @@ const AdminLedger = () => {
     ledger_name: "",
     acc_group: "",
   });
-
+    const location=useLocation()
+    const navigate=useNavigate()
+ 
   const hanldeChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -26,10 +30,14 @@ const AdminLedger = () => {
       const res = await api.post("/ledger", formData);
       if (res.status == 201) {
         setLoader(false);
+
         setFormData({
           ledger_name: "",
           acc_group: "",
         });
+           if(location.state==="true"){
+             navigate("/admin/voucher")
+           }
         fetchData()
         toast.success("Successfully Added ledger");
       }
@@ -54,16 +62,14 @@ const AdminLedger = () => {
   return (
     <div className="container px-8 lg:py-10 min-h-screen bg-[#F4F5F9] mx-auto">
       <div>
-        <h1 className="text-center lg:py-10  py-4 text-3xl text-[#004282] font-bold ">
-          Create Your Ledger
-        </h1>
+      <Heading>
+      Create Your Ledger
+      </Heading>
+       
+    
       </div>
       <div className="max-w-5xl gap-8 lg:flex   justify-between mx-auto">
-        {/* add part */}
         <div className="lg:w-[40%]">
-          {/* <h1 className="text-xl py-5  capitalize text-center">
-            Ledger Add
-          </h1> */}
           <h1
             className={`font-semibold px-2 md:px-0  text-xl py-5  capitalize text-center flex justify-center`}
           >
