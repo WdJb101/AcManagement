@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "../../../assets/logo/main-logo.png";
 // import logo2 from "../../../assets/logo/weepoka-logo-01.png"
 import PropTypes from 'prop-types';
@@ -70,6 +69,10 @@ const ReviceVouchar = ({ formData }) => {
             <span className="font-semibold">CR Account:</span>
             <span>{formData.cr_acc}</span>
           </div>
+         {/* {formData.check_No&& <div className="flex justify-between mb-2">
+            <span className="font-semibold">Check No:</span>
+            <span>{formData.check_No}</span>
+          </div>} */}
           <div className="flex justify-between mb-2">
             <span className="font-semibold">Amount:</span>
             {formData.amount && <span>{formData.amount} TAKA</span>}
@@ -78,6 +81,10 @@ const ReviceVouchar = ({ formData }) => {
             <span className="font-semibold">Narration:</span>
             <p className="ml-2">{formData.narration}</p>
           </div>
+          {formData.check_No&& <div className="flex  mb-2">
+            <span className="font-semibold">Check No:</span>
+            <span className="pl-2">{formData.check_No}</span>
+          </div>}
         </div>
         <div className="mt-8 text-right">
           <span className="font-semibold">Authorized Signature:</span>

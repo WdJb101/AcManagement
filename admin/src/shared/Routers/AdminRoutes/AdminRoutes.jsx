@@ -9,7 +9,7 @@ import AdminSetting from "../../../feature/AdminSetting/AdminSetting";
 import AdminiVoucher from "../../../feature/AdminVoucher/AdminiVoucher";
 import AdminHelpCenter from "../../../feature/AdminHelpCenter/AdminHelpCenter";
 import AdminLedger from "../../../feature/AdminLedger/containers/AdminLedger";
-import AdminTransaction from "../../../feature/AdminTransaction/container/AdminTransaction";
+import AdminPurchase from "../../../feature/AdminPurchase/container/AdminPurchase";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,15 +21,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/ledger",
-        element: <AdminLedger/>,
+        element: <AdminLedger />,
       },
-      {
-        path: "/admin/transaction",
-        element: <AdminTransaction/>,
-      },
+      // {
+      //   path: "/admin/transaction",
+      //   element: <AdminTransaction/>,
+      // },
       {
         path: "/admin/voucher",
         element: <AdminiVoucher />,
+      },
+      {
+        path: "/admin/purchase",
+        element: <AdminPurchase></AdminPurchase>,
       },
       {
         path: "/admin/AdminPayment",
@@ -39,7 +43,10 @@ const router = createBrowserRouter([
         path: "/admin/AdminVoice",
         element: <AdminVoice />,
       },
-
+      {
+        path: "/admin/AdminVoice",
+        element: <AdminVoice />,
+      },
       {
         path: "/admin/AdminSetting",
         element: <AdminSetting />,

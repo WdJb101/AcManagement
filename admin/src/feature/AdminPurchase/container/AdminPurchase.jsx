@@ -6,13 +6,13 @@ import { IoPrintSharp } from "react-icons/io5";
 import { IoMdRefreshCircle } from "react-icons/io";
 import { useReactToPrint } from "react-to-print";
 import { IoDocumentTextOutline } from "react-icons/io5";
-import ReviceVouchar from "../AdminTransaction/components/ReviceVouchar";
-import api from "../../axiosApi/api";
-import { Link } from "react-router-dom";
-import Heading from "../../shared/components/Heading";
 
-const AdminiVoucher = () => {
-  const [isType, setIsType] = useState(true);
+import { Link } from "react-router-dom";
+import api from "../../../axiosApi/api";
+import Heading from "../../../shared/components/Heading";
+import ReviceVouchar from "../../AdminTransaction/components/ReviceVouchar";
+
+const AdminPurchase = () => {
   const [loader, setLoader] = useState(false);
   const [ledger, setLedger] = useState([]);
   const [preview, setPreview] = useState(false);
@@ -27,9 +27,11 @@ const AdminiVoucher = () => {
     amount: "",
     narration: "",
     v_no: "",
-    transaction_type: "",
+    transaction_type: "Purchase",
     check_No: "",
     check_Date: "",
+    item_List: [],
+    total_Price: null,
   });
 
   const handleChange = (e) => {
@@ -40,49 +42,23 @@ const AdminiVoucher = () => {
     }));
   };
 
-  //  for narration
-  useEffect(() => {
-    let narrationText = "";
-
-    if (formData.cr_acc === "Cash") {
-      if (isType) {
-        // Payment with Cash
-        narrationText = `Payment made into ${formData.ledger_type} in Cash`;
-      } else {
-        // Receive with Cash
-        narrationText = `Cash received from ${formData.ledger_type}`;
-      }
-    } else if (formData.cr_acc === "Bank") {
-      if (isType) {
-        // Payment with Bank
-        narrationText = `Payment made into ${formData.ledger_type} through ${
-          formData.transation_with ? formData.transation_with : ""
-        }`;
-      } else {
-        // Receive with Bank
-        narrationText = `${
-          formData.transation_with ? formData.transation_with : ""
-        } received check from ${formData.ledger_type}`;
-      }
-    }
-
-    setFormData((prevData) => ({
-      ...prevData,
-      narration: narrationText,
-    }));
-  }, [formData.ledger_type, formData.cr_acc, formData.transation_with, isType]);
-
   //  for post
   const handleAdd = async () => {
     try {
       setLoader(true);
-      const newData = Object.keys(formData).reduce((acc, key) => {
-        if (formData[key]) {
-          acc[key] = formData[key];
+      const updatedFormData = {
+        ...formData,
+        item_List: items,
+        total_Price: totalPrice,
+      };
+
+      const newData = Object.keys(updatedFormData).reduce((acc, key) => {
+        if (updatedFormData[key]) {
+          acc[key] = updatedFormData[key];
         }
         return acc;
       }, {});
-      console.log(newData);
+
       const res = await api.post("/transaction", newData);
       if (res.status === 201) {
         setLoader(false);
@@ -91,6 +67,24 @@ const AdminiVoucher = () => {
           ...prevData,
           v_no: res.data.data.v_no,
         }));
+        setFormData({
+          posting_date: "",
+          transation_with: "",
+          ledger_type: "",
+          cr_acc: "",
+          amount: "",
+          narration: "",
+          v_no: "",
+          transaction_type: "Purchase",
+          check_No: "",
+          check_Date: "",
+          item_List: [],
+          total_Price: null,
+        });
+        setItems([
+          { item_name: "", item_quantity: null, item_price: null, total: 0 },
+        ]);
+        setTotalPrice(0);
         toast.success("Successfully Added ledger");
         setIsSave(true);
       }
@@ -136,50 +130,57 @@ const AdminiVoucher = () => {
       check_Date: "",
     });
   };
-  useEffect(() => {
-    if (isType) {
-      setFormData((prevData) => ({
-        ...prevData,
-        transaction_type: "Payment",
-      }));
+
+  const [items, setItems] = useState([
+    { item_name: "", item_quantity: null, item_price: null, total: 0 },
+  ]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const handleInputChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedItems = [...items];
+    if (name === "item_price" || name === "item_quantity") {
+      updatedItems[index][name] = value ? parseFloat(value) : 0;
     } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        transaction_type: "Receive",
-      }));
+      updatedItems[index][name] = value;
     }
-  }, [isType]);
+
+    updatedItems[index].total =
+      (parseFloat(updatedItems[index].item_price) || 0) *
+      (parseInt(updatedItems[index].item_quantity) || 0);
+
+    const newTotalPrice = updatedItems.reduce(
+      (sum, item) => sum + item.total,
+      0
+    );
+
+    setItems(updatedItems);
+    setTotalPrice(newTotalPrice);
+  };
+
+  const handleAddRow = () => {
+    setItems([
+      ...items,
+      { item_name: "", item_quantity: null, item_price: null, total: 0 },
+    ]);
+  };
+
+  const handleDeleteRow = (index) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    setItems(updatedItems);
+
+    const newTotalPrice = updatedItems.reduce(
+      (sum, item) => sum + item.total,
+      0
+    );
+    setTotalPrice(newTotalPrice);
+  };
 
   return (
     <div className="  min-h-screen">
       <div className=" lg:px-7 px-4 max-w-7xl  py-8  mx-auto rounded-lg">
-        <Heading>Transaction Voucher</Heading>
+        <Heading>Purchase</Heading>
         <div className="py-6 ">
-          <div className="flex flex-col items-start justify-start py-5  rounded-lg mt-6 w-full">
-            <div className="relative flex justify-center items-center  bg-white shadow-inner rounded-lg p-1 w-full max-w-xs mx-auto">
-              <div
-                className={`absolute left-0 top-0 w-1/2 bg-[#004282]  rounded h-full transition-transform duration-500 ease-in-out transform ${
-                  isType ? "translate-x-0" : "translate-x-full"
-                }`}
-              ></div>
-              <button
-                className={`z-10 w-1/2 text-center py-1 font-semibold transition-colors duration-500 ease-in-out ${
-                  isType ? "text-white" : "text-[#004282]"
-                }`}
-                onClick={() => setIsType(true)}
-              >
-                Payment
-              </button>
-              <button
-                className={`z-10 w-1/2 text-center py-1 font-semibold transition-colors duration-500 ease-in-out ${
-                  !isType ? "text-white" : "text-[#004282]"
-                }`}
-                onClick={() => setIsType(false)}
-              >
-                Receive
-              </button>
-            </div>
-          </div>
           <div className="mt-6 grid lg:grid-cols-2 py-6 gap-8">
             <div className="relative h-11 w-full min-w-[200px]">
               <input
@@ -208,8 +209,8 @@ const AdminiVoucher = () => {
                 Transaction With
               </label>
             </div>
-            <div className="flex items-center mt-4 justify-between w-full">
-              <div className="relative h-11 w-[80%] min-w-[180px]">
+            <div className="flex items-center  mt-5 justify-between w-full">
+              <div className="relative h-11 lg:w-[95%] md:w-[80%] w-[70%] min-w-[180px]">
                 <select
                   value={formData.ledger_type}
                   name="ledger_type"
@@ -234,7 +235,7 @@ const AdminiVoucher = () => {
               <Link
                 state={"true"}
                 to="/admin/ledger"
-                className="ml-3 flex mt-1 items-center bg-[#004886] text-white py-[6px] px-2 text-center rounded text-xs font-semibold hover:bg-[#003366] transition-colors"
+                className="ml-3 md:w-[20%] w-[30%] flex mt-1 items-center bg-[#004886] text-white py-[6px] px-2 text-center rounded text-xs font-semibold hover:bg-[#003366] transition-colors"
               >
                 <svg
                   className="w-4 h-4 mr-1"
@@ -256,7 +257,7 @@ const AdminiVoucher = () => {
 
             <div className="flex items-center mt-5 space-x-6">
               <p className="text-[#004886] text-sm font-medium ">
-                Choice Method :
+                Chose Method :
               </p>
               <label className="flex items-center text-[#004886]">
                 <input
@@ -314,7 +315,6 @@ const AdminiVoucher = () => {
             <div className="relative h-11 mt-4 w-full min-w-[200px]">
               <input
                 required
-                disabled
                 value={formData.narration}
                 onChange={handleChange}
                 name="narration"
@@ -338,6 +338,87 @@ const AdminiVoucher = () => {
               <label className="absolute left-0 -top-3 font-medium text-[#004886] transition-all peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-[#004886]">
                 Amount
               </label>
+            </div>
+            {/* purchase section */}
+          </div>
+          <div className="mt-4">
+            <h2 className="text-lg font-bold text-[#004282] mb-4">
+              Purchase Section:
+            </h2>
+
+            <table className="w-full text-[#004282] border-collapse">
+              <thead className="font-semibold text-left border-b">
+                <tr>
+                  <th className="py-2">Name</th>
+                  <th className="py-2">Quantity</th>
+                  <th className="py-2">Price</th>
+                  <th className="py-2 text-center">Total</th>
+                  <th className="py-2 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item, index) => (
+                  <tr key={index} className="border-t">
+                    <td className="py-2 border-b">
+                      <input
+                        type="text"
+                        name="item_name"
+                        placeholder="Enter Item Name"
+                        value={item.item_name}
+                        onChange={(e) => handleInputChange(index, e)}
+                        className="w-full border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
+                      />
+                    </td>
+                    <td className="py-2 border-b">
+                      <input
+                        type="number"
+                        name="item_quantity"
+                        placeholder="Enter Quantity"
+                        value={item.item_quantity}
+                        onChange={(e) => handleInputChange(index, e)}
+                        className="w-full border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
+                      />
+                    </td>
+                    <td className="py-2 border-b">
+                      <input
+                        type="number"
+                        name="item_price"
+                        placeholder="Enter Price"
+                        value={item.price}
+                        onChange={(e) => handleInputChange(index, e)}
+                        className="w-full border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
+                      />
+                    </td>
+                    <td className="py-2 text-center border-b text-lg font-medium text-blue-gray-700">
+                      ${item.total.toFixed(2)}
+                    </td>
+                    <td className="py-2 text-center border-b">
+                      {index === items.length - 1 && (
+                        <button
+                          onClick={handleAddRow}
+                          className="bg-[#004282] text-white py-1 px-2 text-sm font-semibold rounded hover:bg-[#003366] transition-colors mr-2"
+                        >
+                          Add More
+                        </button>
+                      )}
+                      {index != items.length - 1 && (
+                        <button
+                          onClick={() => handleDeleteRow(index)}
+                          className="bg-red-600 text-white py-1 px-2 text-sm font-semibold rounded hover:bg-red-700 transition-colors"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="mt-3 pt-3">
+              <p className="text-xl font-semibold text-[#004282] pt-3">
+                Total Price: {totalPrice.toFixed(2)} TK
+              </p>
             </div>
           </div>
 
@@ -372,7 +453,7 @@ const AdminiVoucher = () => {
             </button>
           </div>
           {preview ? (
-            <div className="flex items-center justify-center max-w-4xl mx-auto  h-full py-10">
+            <div className="flex items-center justify-center max-w-4xl mx-auto  h-full py-1">
               <div
                 ref={componentRef}
                 className="transition-all w-full duration-500"
@@ -402,4 +483,4 @@ const AdminiVoucher = () => {
   );
 };
 
-export default AdminiVoucher;
+export default AdminPurchase;

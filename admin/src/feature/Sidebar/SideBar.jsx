@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import TypeIcon from "../../shared/Icon/TypeIcon";
 import { Link, useLocation } from "react-router-dom";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+
 // import { GrTransaction } from "react-icons/gr";
 import "./SideBar";
 const SideBar = () => {
   const location = useLocation();
   const isActive = location.pathname;
   const [isOpen, setIsOpen] = useState(true);
-
   const toggle = () => setIsOpen(!isOpen);
+
   return (
     <>
       <div
-        style={{ width: isOpen ? "80px" : "180px" }}
+        style={{ width: isOpen ? "100px" : "200px" }}
         id="admin-panel-sidebar"
         className="fixed top-0 z-20 flex flex-col items-center justify-center h-screen p-3 space-y-2   transition-all duration-500 bg-white shadow-lg rounded-r-xl md:w-60 hover:text-black backdrop-blur-md"
       >
@@ -21,7 +22,7 @@ const SideBar = () => {
           <div>
             <h2
               className={` ${
-                isOpen ? "text-base fon" : "text-4xl"
+                isOpen ? "text-lg" : "text-4xl"
               } text-primary font-bold py-[50px] `}
             >
               WeeCash
@@ -83,10 +84,10 @@ const SideBar = () => {
                     </div>
                   </Link>
                 </li>
-                <li className="pb-7">
+                {/* <li className="pb-7">
                   <Link to="/admin/transaction">
                     <div className="flex justify-between items-center">
-                      <div className="flex gap-3 p">
+                      <div className="flex gap-3 ">
                         <span
                           className={`text-2xl hover:text-[#00B8FF] duration-150 ${
                             isActive == "/admin/transaction"
@@ -111,14 +112,47 @@ const SideBar = () => {
                       </div>
                     </div>
                   </Link>
+                </li> */}
+                <li className="pb-7">
+                  <Link to="/admin/purchase">
+                    <div className="flex justify-between items-center">
+                      <div className="flex gap-3 ">
+                        <span
+                          className={`text-2xl hover:text-[#00B8FF] duration-150 ${
+                            isActive == "/admin/purchase"
+                              ? "text-[#00B8FF]"
+                              : "text-[#446CCF]"
+                          }`}
+                        >
+                          <TypeIcon type="purchase" />
+                        </span>
+
+                        <p
+                          className={`text-base font-medium ${
+                            isOpen ? "hidden" : "w-auto"
+                          } hover:text-[#FF3B30] duration-150 ${
+                            isActive == "/admin/purchase"
+                              ? "text-[#FF3B30]"
+                              : "text-[#7C8DB5]"
+                          } `}
+                        >
+                          Purchase
+                        </p>
+                      </div>
+
+                      {/* <span className="text-[#7C8DB5] text-sm">
+                      <TypeIcon type="downarrow" />
+                    </span> */}
+                    </div>
+                  </Link>
                 </li>
                 <li className="pb-7">
                   <Link to="/admin/voucher">
                     <div className="flex justify-between items-center">
-                      <div className="flex gap-3 p">
+                      <div className="flex gap-3 ">
                         <span
                           className={`text-2xl hover:text-[#00B8FF] duration-150 ${
-                            isActive == "/admin/Voucher"
+                            isActive == "/admin/voucher"
                               ? "text-[#00B8FF]"
                               : "text-[#446CCF]"
                           } `}
@@ -170,9 +204,9 @@ const SideBar = () => {
                           Payment
                         </p>
                       </div>
-                      <span className="text-[#7C8DB5] text-sm">
+                      {/* <span className="text-[#7C8DB5] text-sm">
                         <TypeIcon type="downarrow" />
-                      </span>
+                      </span> */}
                     </div>
                   </Link>
                 </li>
@@ -312,7 +346,9 @@ const SideBar = () => {
                 </div>
               </li> */}
               <li onClick={toggle} className="pb-7">
-                <div className={`flex items-center ${isOpen? "gap-0":"gap-3"}`}>
+                <div
+                  className={`flex items-center ${isOpen ? "gap-0" : "gap-3"}`}
+                >
                   <div className={`transition-all  ${isOpen ? "" : ""}`}>
                     {isOpen ? (
                       <FaChevronUp className="text-xl cursor-pointer" />
@@ -325,7 +361,7 @@ const SideBar = () => {
                       isOpen ? "" : "w-auto"
                     }`}
                   >
-                    Close
+                    {isOpen ? "Open" : "Close"}
                   </p>
                 </div>
               </li>

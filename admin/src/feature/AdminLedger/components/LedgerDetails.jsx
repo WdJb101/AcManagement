@@ -20,7 +20,7 @@ const LedgerDetails = ({ ledgerData, fetchData }) => {
     <div>
     <div>
       <h1
-        className="font-semibold px-2 md:px-0 text-xl py-5 capitalize flex justify-center"
+        className="font-semibold px-2 text-[#004282] md:px-0 text-xl py-10 capitalize flex justify-center"
       >
         Ledger List
         <div>

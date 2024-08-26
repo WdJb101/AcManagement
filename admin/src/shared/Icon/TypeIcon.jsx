@@ -13,6 +13,7 @@ import { BsChatDotsFill } from "react-icons/bs";
 import { IoIosLogOut } from "react-icons/io";
 import { FaBook } from 'react-icons/fa';
 import { GrTransaction } from "react-icons/gr";
+import { BiSolidPurchaseTag } from "react-icons/bi";
 const iconMap = {
   info: CiCircleInfo,
   eyeopen: IoIosEye,
@@ -26,7 +27,8 @@ const iconMap = {
   chat: BsChatDotsFill,
   logout: IoIosLogOut,
   ledger: FaBook,
-  transaction: GrTransaction
+  transaction: GrTransaction,
+  purchase: BiSolidPurchaseTag
 };
 
 const TypeIcon = React.memo(({ type, className, size }) => {
@@ -46,6 +48,7 @@ TypeIcon.propTypes = {
   type: PropTypes.string.isRequired,
   css: PropTypes.string,
   size: PropTypes.number,
+  className:PropTypes.string
 };
 
 TypeIcon.defaultProps = {

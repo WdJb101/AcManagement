@@ -15,7 +15,7 @@ const AdminLayout = () => {
   };
   return (
     <div className="">
-      <div className="w-full bg-white shadow-md md:hidden flex justify-between z-50 items-center p-4 fixed top-0 left-0">
+      <div className="w-full  shadow-md md:hidden bg-white flex justify-between z-[5000] items-center p-4 fixed top-0 left-0">
         <div className="flex items-center">
           <button onClick={toggleSidebar} className="text-2xl">
             {isSidebarOpen ? <TfiClose /> : <FaBars />}
@@ -34,21 +34,24 @@ const AdminLayout = () => {
       </div>
       <div
         style={{
-          transform: isSidebarOpen ? "translateX(0)" : "translateX(-100%)",
+          transform: isSidebarOpen ? "translateX(0)" : "translateX(-200%)",
         }}
-        className={`bg-[#f9fdfd] fixed top-0 left-0 h-full w-[80px] transition-transform duration-300 ease-in-out z-40`}
+        className={`bg-[#f9fdfd] fixed top-0 left-0 md:hidden block h-full w-[100px] transition-transform duration-300 ease-in-out z-40`}
       >
         <SideBar />
       </div>
-      <div style={{ width: "80px" }} className="md:block hidden">
+
+     <div className="flex">
+     <div style={{ width: "100px" }} className="md:block hidden">
         <SideBar />
       </div>
 
       <div
-        className={`flex-1 transition-all duration-300 md:pt-0   bg-[#F4F5F9] pt-[64px]`} // pt-[64px] adjusts for the fixed navbar height
+        className={`flex-1 transition-all duration-300 md:pt-0   bg-[#F4F5F9] pt-[64px]`} 
       >
         <Outlet />
       </div>
+     </div>
     </div>
   );
 };

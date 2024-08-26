@@ -60,7 +60,7 @@ const AdminLedger = () => {
   }, []);
 
   return (
-    <div className="container px-8 lg:py-10 min-h-screen bg-[#F4F5F9] mx-auto">
+    <div className="max-w-7xl  md:px-8 px-3 py-10 min-h-screen bg-[#F4F5F9] mx-auto">
       <div>
       <Heading>
       Create Your Ledger
@@ -68,10 +68,10 @@ const AdminLedger = () => {
        
     
       </div>
-      <div className="max-w-5xl gap-8 lg:flex   justify-between mx-auto">
+      <div className=" gap-8 lg:flex py-4  justify-between mx-auto">
         <div className="lg:w-[40%]">
           <h1
-            className={`font-semibold px-2 md:px-0  text-xl py-5  capitalize text-center flex justify-center`}
+            className={`font-semibold px-2 md:px-0 text-[#004282]  text-xl py-10  capitalize text-center flex justify-center`}
           >
             Ledger Add
             <div>
@@ -79,8 +79,7 @@ const AdminLedger = () => {
             </div>
           </h1>
           <div>
-            <h1 className="font-semibold"> Name</h1>
-            <div className="relative mt-[10px]">
+            <div className="relative h-11 w-full min-w-[200px]">
               <input
                 required
                 value={formData.ledger_name}
@@ -88,32 +87,35 @@ const AdminLedger = () => {
                 type="text"
                 name="ledger_name"
                 placeholder="Enter Name"
-                className="border focus:outline-none w-full py-2 rounded-lg px-4 text-base"
+                className="peer h-full w-full border-b border-blue-gray-200 border-gray-300  bg-transparent pt-4 pb-1.5 text-sm font-normal text-blue-gray-700 outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0"
               />
+              <label className="absolute left-0 -top-3 font-medium text-[#004886] transition-all peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-[#004886]">
+              Name
+              </label>
             </div>
           </div>
-          <div className="mt-4">
-            <h1 className="font-semibold"> Category</h1>
-            <div className="relative mt-[10px]">
-              <select
-                onChange={hanldeChange}
-                value={formData.acc_group}
-                name="acc_group"
-                required
-                className="border focus:outline-none w-full py-2 rounded-lg px-4 text-base"
-              >
-                <option disabled selected hidden value="">
-                  Select
-                </option>
-                <option value="Asset">Asset</option>
+          <div className="relative mt-10 h-11 w-full min-w-[200px]">
+                <select
+                    onChange={hanldeChange}
+                    value={formData.acc_group}
+                    name="acc_group"
+                  required
+                  className="peer h-full w-full border-b border-gray-300  border-blue-gray-200 bg-transparent pt-4 pb-1.5 text-sm font-normal text-blue-gray-700 outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0"
+                >
+                  <option disabled selected hidden value="">
+                    Select
+                  </option>
+                  <option value="Asset">Asset</option>
                 <option value="Expense">Expense</option>
                 <option value="Dividen">Dividen</option>
                 <option value="Liability">Liability</option>
                 <option value="Equity">Equity</option>
                 <option value="Revenew">Revenew</option>
-              </select>
-            </div>
-          </div>
+                </select>
+                <label className="absolute left-0 -top-3 border-gray-300  font-medium text-[#004886] transition-all peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-[#004886]">
+                  Ledger Type
+                </label>
+              </div>
           <div className="mt-4">
             <button
               onClick={handleAdd}
