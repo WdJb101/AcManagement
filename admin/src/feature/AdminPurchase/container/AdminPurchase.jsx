@@ -10,7 +10,7 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import api from "../../../axiosApi/api";
 import Heading from "../../../shared/components/Heading";
-import ReviceVouchar from "../../AdminTransaction/components/ReviceVouchar";
+import PurchaseInvoice from "../components/PurchaseInvoice";
 
 const AdminPurchase = () => {
   const [loader, setLoader] = useState(false);
@@ -33,7 +33,7 @@ const AdminPurchase = () => {
     item_List: [],
     total_Price: null,
   });
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -58,7 +58,6 @@ const AdminPurchase = () => {
         }
         return acc;
       }, {});
-
       const res = await api.post("/transaction", newData);
       if (res.status === 201) {
         setLoader(false);
@@ -339,7 +338,6 @@ const AdminPurchase = () => {
                 Amount
               </label>
             </div>
-            {/* purchase section */}
           </div>
           <div className="mt-4">
             <h2 className="text-lg font-bold text-[#004282] mb-4">
@@ -363,7 +361,7 @@ const AdminPurchase = () => {
                       <input
                         type="text"
                         name="item_name"
-                        placeholder="Enter Item Name"
+                        placeholder=" Name"
                         value={item.item_name}
                         onChange={(e) => handleInputChange(index, e)}
                         className="w-full border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
@@ -373,7 +371,7 @@ const AdminPurchase = () => {
                       <input
                         type="number"
                         name="item_quantity"
-                        placeholder="Enter Quantity"
+                        placeholder="Quantity"
                         value={item.item_quantity}
                         onChange={(e) => handleInputChange(index, e)}
                         className="w-full border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
@@ -383,7 +381,7 @@ const AdminPurchase = () => {
                       <input
                         type="number"
                         name="item_price"
-                        placeholder="Enter Price"
+                        placeholder="Price"
                         value={item.price}
                         onChange={(e) => handleInputChange(index, e)}
                         className="w-full border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
@@ -396,7 +394,7 @@ const AdminPurchase = () => {
                       {index === items.length - 1 && (
                         <button
                           onClick={handleAddRow}
-                          className="bg-[#004282] text-white py-1 px-2 text-sm font-semibold rounded hover:bg-[#003366] transition-colors mr-2"
+                          className="bg-[#004282] text-white py-1 px-2 md:text-sm text-xs line-clamp-1 font-semibold rounded hover:bg-[#003366] transition-colors mr-2"
                         >
                           Add More
                         </button>
@@ -422,31 +420,31 @@ const AdminPurchase = () => {
             </div>
           </div>
 
-          <div className="py-6 flex gap-2 justify-between">
+          <div className="py-6 flex md:gap-2  mt-6 gap-1 justify-between">
             <button
               onClick={handleAdd}
-              className="py-[6px] px-3 flex items-center text-sm gap-2 rounded-md bg-[#004282] text-white hover:bg-gray-300 hover:text-[#004282] transition-colors"
+              className="py-[6px] px-3 flex items-center text-sm md:gap-2 gap-1 rounded-md bg-[#004282] text-white hover:bg-gray-300 hover:text-[#004282] transition-colors"
             >
               <CiSaveDown2 className="text-lg font-bold" />
               <p className="font-semibold text-xs">Save</p>
             </button>
             <button
               onClick={() => setPreview((prev) => !prev)}
-              className="py-[6px] px-3 flex items-center gap-2 rounded-md bg-[#004282] text-white hover:bg-gray-300 hover:text-[#004282] transition-colors"
+              className="py-[6px] md:px-3 px-2 flex items-center md:gap-2 gap-1 rounded-md bg-[#004282] text-white hover:bg-gray-300 hover:text-[#004282] transition-colors"
             >
               <MdPreview className="text-lg font-bold" />
               <p className="font-semibold text-xs">Preview</p>
             </button>
             <button
               onClick={onPrint}
-              className="py-[6px] px-3 flex items-center gap-2 rounded-md bg-[#004282] text-white hover:bg-gray-300 hover:text-[#004282] transition-colors"
+              className="py-[6px] md:px-3 px-2  flex items-center md:gap-2 gap-1 rounded-md bg-[#004282] text-white hover:bg-gray-300 hover:text-[#004282] transition-colors"
             >
               <IoPrintSharp className="text-lg font-bold" />
               <p className="font-semibold text-xs">Print</p>
             </button>
             <button
               onClick={handleRefresh}
-              className="py-[6px] px-3 flex items-center gap-2 rounded-md bg-[#004282] text-white hover:bg-gray-300 hover:text-[#004282] transition-colors"
+              className="py-[6px] md:px-3 px-2  flex items-center md:gap-2 gap-1 rounded-md bg-[#004282] text-white hover:bg-gray-300 hover:text-[#004282] transition-colors"
             >
               <IoMdRefreshCircle className="text-lg font-bold" />
               <p className="font-semibold text-xs">Refresh</p>
@@ -458,7 +456,7 @@ const AdminPurchase = () => {
                 ref={componentRef}
                 className="transition-all w-full duration-500"
               >
-                <ReviceVouchar formData={formData} />
+                <PurchaseInvoice items={items} totalPrice={totalPrice} formData={formData} />
               </div>
             </div>
           ) : (
