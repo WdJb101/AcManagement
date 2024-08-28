@@ -6,7 +6,7 @@ const ReviceVouchar = ({ formData }) => {
     <div className="w-full mx-auto lg:p-6 p-3 print:flex print:items-center   print:h-screen bg-gray-100 border-2 border-gray-300 rounded-lg shadow-lg">
       <div className="w-full">
         <div className="text-center mb-8">
-          <h1 className="text-3xl text-[#004282] font-bold">Weepok</h1>
+          <h1 className="text-3xl text-[#004282] font-bold">Weepoka</h1>
           <div className="relative mt-4">
             <img
               src={logo}

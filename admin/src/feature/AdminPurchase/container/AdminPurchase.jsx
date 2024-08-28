@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { CiSaveDown2 } from "react-icons/ci";
 import { MdPreview } from "react-icons/md";
@@ -33,7 +33,7 @@ const AdminPurchase = () => {
     item_List: [],
     total_Price: null,
   });
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -234,7 +234,7 @@ const AdminPurchase = () => {
               <Link
                 state={"true"}
                 to="/admin/ledger"
-                className="ml-3 md:w-[20%] w-[30%] flex mt-1 items-center bg-[#004886] text-white py-[6px] px-2 text-center rounded text-xs font-semibold hover:bg-[#003366] transition-colors"
+                className="ml-3 md:w-[20%] w-[30%]  flex mt-1 items-center bg-[#004886] text-white py-[6px] px-2 text-center rounded text-xs font-semibold hover:bg-[#003366] transition-colors"
               >
                 <svg
                   className="w-4 h-4 mr-1"
@@ -339,8 +339,8 @@ const AdminPurchase = () => {
               </label>
             </div>
           </div>
-          <div className="mt-4">
-            <h2 className="text-lg font-bold text-[#004282] mb-4">
+          <div className="mt-4 bg-[#F4F5F9] border border-gray-200 shadow-sm py-4 pl-3 rounded-md">
+            <h2 className="text-2xl font-bold text-[#004282] mb-4">
               Purchase Section:
             </h2>
 
@@ -364,7 +364,7 @@ const AdminPurchase = () => {
                         placeholder=" Name"
                         value={item.item_name}
                         onChange={(e) => handleInputChange(index, e)}
-                        className="w-full border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
+                        className="w-[80%] border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
                       />
                     </td>
                     <td className="py-2 border-b">
@@ -374,7 +374,7 @@ const AdminPurchase = () => {
                         placeholder="Quantity"
                         value={item.item_quantity}
                         onChange={(e) => handleInputChange(index, e)}
-                        className="w-full border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
+                        className="w-[80%] border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
                       />
                     </td>
                     <td className="py-2 border-b">
@@ -384,17 +384,17 @@ const AdminPurchase = () => {
                         placeholder="Price"
                         value={item.price}
                         onChange={(e) => handleInputChange(index, e)}
-                        className="w-full border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
+                        className="w-[80%] border-none bg-transparent py-2 text-lg font-normal text-blue-gray-700 outline-0 transition-all focus:border-gray-900"
                       />
                     </td>
                     <td className="py-2 text-center border-b text-lg font-medium text-blue-gray-700">
                       ${item.total.toFixed(2)}
                     </td>
-                    <td className="py-2 text-center border-b">
+                    <td className="py-2 text-center  border-b">
                       {index === items.length - 1 && (
                         <button
                           onClick={handleAddRow}
-                          className="bg-[#004282] text-white py-1 px-2 md:text-sm text-xs line-clamp-1 font-semibold rounded hover:bg-[#003366] transition-colors mr-2"
+                          className="bg-[#004282]  border md:ml-6   text-white py-1 px-2 md:text-sm text-xs line-clamp-1 font-semibold rounded hover:bg-[#003366] transition-colors "
                         >
                           Add More
                         </button>
@@ -402,7 +402,7 @@ const AdminPurchase = () => {
                       {index != items.length - 1 && (
                         <button
                           onClick={() => handleDeleteRow(index)}
-                          className="bg-red-600 text-white py-1 px-2 text-sm font-semibold rounded hover:bg-red-700 transition-colors"
+                          className="bg-red-600 text-white md:py-1 py-[3px] md:px-2 px-1 text-sm font-semibold rounded hover:bg-red-700 transition-colors"
                         >
                           Delete
                         </button>
@@ -456,7 +456,11 @@ const AdminPurchase = () => {
                 ref={componentRef}
                 className="transition-all w-full duration-500"
               >
-                <PurchaseInvoice items={items} totalPrice={totalPrice} formData={formData} />
+                <PurchaseInvoice
+                  items={items}
+                  totalPrice={totalPrice}
+                  formData={formData}
+                />
               </div>
             </div>
           ) : (
