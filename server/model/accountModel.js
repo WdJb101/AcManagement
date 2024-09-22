@@ -12,7 +12,6 @@ const accountSchema = new Schema(
 
     balance_type: {
       type: String,
-
       enum: ["dr", "cr"],
     },
     balance: {

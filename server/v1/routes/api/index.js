@@ -1,6 +1,5 @@
 const express = require("express");
 const _ = express.Router();
-
 const addAc = require("./openAcApi/openApi");
 const newTran = require("./transaction/transApi");
 const cashBk = require("./cashBook/cashbookApi");
